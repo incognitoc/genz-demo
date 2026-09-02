@@ -550,6 +550,84 @@ tbody tr:hover{background:var(--surface-2);}
 }
 .placeholder i{font-size:var(--fs-24);margin-bottom:var(--s2);display:block;color:var(--ink-mute);}
 
+/* ============ Settings ============ */
+.card-group{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:var(--s3);
+}
+.card-group__title{
+  font-size:var(--fs-12);font-weight:600;letter-spacing:.03em;color:var(--ink-mute);
+  padding:14px var(--s3) 4px;
+}
+.set-row{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s3);
+  padding:14px var(--s3);border-top:1px solid var(--line);
+}
+.card-group__title + .set-row{border-top:0;}
+.set-row__label{font-size:var(--fs-14);font-weight:500;min-width:0;}
+.set-row__label small{display:block;font-size:var(--fs-12);color:var(--ink-mute);font-weight:400;margin-top:2px;line-height:1.4;}
+.set-row__val{font-size:var(--fs-14);color:var(--ink-mid);text-align:right;}
+.set-row select,.set-row input[type="text"]{
+  height:36px;padding:0 10px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  background:var(--bg);color:var(--ink);font-family:inherit;font-size:var(--fs-14);max-width:180px;
+}
+
+.toggle{
+  position:relative;width:42px;height:24px;flex:0 0 42px;
+  border-radius:var(--pill);background:var(--line-strong);
+  transition:background .15s ease;cursor:pointer;border:0;padding:0;
+}
+.toggle::after{
+  content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;
+  border-radius:var(--pill);background:#fff;box-shadow:var(--shadow-sm);
+  transition:transform .15s ease;
+}
+.toggle[aria-pressed="true"]{background:var(--brand);}
+.toggle[aria-pressed="true"]::after{transform:translateX(18px);}
+.notif-head{display:flex;justify-content:flex-end;gap:var(--s2);padding:10px var(--s3) 0;}
+.notif-head span{width:42px;text-align:center;font-size:var(--fs-12);color:var(--ink-mute);}
+.notif-cell{display:flex;gap:var(--s2);}
+.notif-cell .toggle{flex-basis:42px;}
+
+.logout{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;
+  border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  font-family:var(--font-display);font-weight:600;font-size:var(--fs-14);color:var(--ink-mid);
+}
+.logout:hover{background:var(--surface-2);color:var(--ink);}
+
+/* ============ Help ============ */
+.rule{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);padding:var(--s3);margin-bottom:var(--s2);
+}
+.rule h3{font-size:var(--fs-16);margin-bottom:8px;}
+.rule p{font-size:var(--fs-14);color:var(--ink-mid);line-height:1.7;}
+.rule p + p{margin-top:8px;}
+.rule ul{margin:8px 0 0;padding-left:18px;font-size:var(--fs-14);color:var(--ink-mid);line-height:1.8;}
+
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0 4px;}
+.flow__node{
+  padding:6px 12px;border-radius:var(--pill);
+  background:var(--surface-2);border:1px solid var(--line-strong);
+  font-size:var(--fs-12);font-weight:600;white-space:nowrap;
+}
+.flow i{color:var(--ink-mute);font-size:10px;}
+.flow--exc .flow__node{background:var(--alert-tint);color:var(--alert);border-color:transparent;}
+
+details.faq{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);
+  margin-bottom:8px;
+}
+details.faq summary{
+  padding:14px var(--s3);font-size:var(--fs-14);font-weight:600;cursor:pointer;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:var(--s2);
+}
+details.faq summary::-webkit-details-marker{display:none;}
+details.faq summary i{color:var(--ink-mute);font-size:11px;transition:transform .15s ease;}
+details.faq[open] summary i{transform:rotate(180deg);}
+details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mid);line-height:1.7;margin:0;}
+
 /* ============ Login ============ */
 .login{
   min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -1482,31 +1560,104 @@ tbody tr:hover{background:var(--surface-2);}
           <h1>我的技能</h1>
           <p>已驗證的技能決定你能認領哪些任務。補齊缺口可解鎖更多選擇任務。</p>
         </div>
-        <div class="section__head"><h2>已驗證技能</h2></div>
+        <div class="section__head"><h2>已驗證技能</h2><span class="hint">4 項</span></div>
         <div class="tablewrap">
           <table>
-            <thead><tr><th>技能</th><th>等級</th><th>最近使用</th><th>驗證人</th></tr></thead>
+            <thead><tr><th>技能</th><th>等級</th><th>最近使用</th><th>使用次數</th><th>驗證人</th></tr></thead>
             <tbody>
-              <tr><td>技術寫作</td><td>Lv2</td><td class="t-num">3 天前</td><td>王主管</td></tr>
-              <tr><td>市場研究</td><td>Lv2</td><td class="t-num">2 週前</td><td>王主管</td></tr>
-              <tr><td>訪談記錄</td><td>Lv1</td><td class="t-num">1 個月前</td><td>林研究員</td></tr>
-              <tr><td>視覺設計</td><td>Lv1</td><td class="t-num">1 週前</td><td>陳設計總監</td></tr>
+              <tr><td>技術寫作</td><td>Lv2</td><td class="t-num">3 天前</td><td class="t-num">28</td><td>王主管</td></tr>
+              <tr><td>市場研究</td><td>Lv2</td><td class="t-num">2 週前</td><td class="t-num">11</td><td>王主管</td></tr>
+              <tr><td>訪談記錄</td><td>Lv1</td><td class="t-num">1 個月前</td><td class="t-num">6</td><td>林研究員</td></tr>
+              <tr><td>視覺設計</td><td>Lv1</td><td class="t-num">1 週前</td><td class="t-num">4</td><td>陳設計總監</td></tr>
             </tbody>
           </table>
         </div>
+
+        <div class="section">
+          <div class="section__head"><h2>審核中的申請</h2></div>
+          <div class="work">
+            <div class="work__item">
+              <div class="work__top"><span class="pill pill--wait"><i class="fa-solid fa-circle"></i>審核中</span><span class="work__title">SQL 查詢 Lv2</span></div>
+              <p class="work__note" style="color:var(--ink-mute)">9／14 送出・附作品連結 2 筆・待林研究員驗證</p>
+            </div>
+          </div>
+        </div>
+
         <div class="section">
           <div class="section__head"><h2>建議補齊的技能</h2></div>
           <div class="gap">
             <div class="gap__item">
-              <p>通過 <b>SQL 查詢 Lv2</b> 後，可多接 <b class="num">4</b> 個資料分析類任務。</p>
-              <a data-action="apply">申請技能驗證<i class="fa-solid fa-arrow-right"></i></a>
+              <p>通過 <b>英文簡報 Lv1</b> 後，可多接 <b class="num">2</b> 個跨國專案任務。</p>
+              <a data-view="skillapply">申請技能驗證<i class="fa-solid fa-arrow-right"></i></a>
             </div>
             <div class="gap__item">
-              <p>通過 <b>英文簡報 Lv1</b> 後，可多接 <b class="num">2</b> 個跨國專案任務。</p>
-              <a data-action="apply">申請技能驗證<i class="fa-solid fa-arrow-right"></i></a>
+              <p>將 <b>視覺設計</b> 升到 <b>Lv2</b>，可多接 <b class="num">3</b> 個品牌設計任務。</p>
+              <a data-view="skillapply">申請技能驗證<i class="fa-solid fa-arrow-right"></i></a>
             </div>
           </div>
-          <button class="cta" data-action="apply">申請新技能<i class="fa-solid fa-plus"></i></button>
+          <button class="cta" data-view="skillapply">申請新技能<i class="fa-solid fa-plus"></i></button>
+        </div>
+      </section>
+
+      <!-- ---------- SKILL APPLY（申請技能驗證） ---------- -->
+      <section class="view" data-view-panel="skillapply">
+        <div class="page-head">
+          <a class="back" data-view="skills"><i class="fa-solid fa-arrow-left"></i>回我的技能</a>
+          <h1>申請技能驗證</h1>
+          <p>填寫要申請的技能與佐證資料，送出後由指定驗證人審核。通過後即可認領對應任務。</p>
+        </div>
+
+        <div id="skillForm">
+          <div class="field">
+            <label for="skName">技能</label>
+            <input id="skName" type="text" value="SQL 查詢" placeholder="輸入技能名稱">
+          </div>
+          <div class="field" style="margin-top:16px;">
+            <label>申請等級</label>
+            <div class="chips" style="margin-bottom:0;" data-single>
+              <button type="button" class="chip">Lv1</button>
+              <button type="button" class="chip is-active">Lv2</button>
+              <button type="button" class="chip">Lv3</button>
+            </div>
+          </div>
+          <div class="field" style="margin-top:16px;">
+            <label for="skEvidence">佐證資料</label>
+            <textarea id="skEvidence" placeholder="作品連結、相關專案經驗、證照或課程證明…"></textarea>
+          </div>
+
+          <div class="dropzone" style="margin-top:8px;">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <p>上傳證照或作品檔案（選填）</p>
+            <button type="button" data-action="pickfile2">選擇檔案</button>
+            <small>此為 POC 展示，不會真的上傳</small>
+          </div>
+          <div id="fileChip2" hidden>
+            <div class="filechip"><i class="fa-solid fa-file-lines"></i><span>sql-certificate.pdf・180 KB</span><span class="x" data-action="rmfile2">✕</span></div>
+          </div>
+
+          <div class="field" style="margin-top:16px;">
+            <label for="skVerifier">指定驗證人</label>
+            <select id="skVerifier" style="height:44px;padding:0 12px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--bg);color:var(--ink);font-family:inherit;font-size:var(--fs-16);">
+              <option>林研究員（資料分析）</option>
+              <option>王主管（內容行銷部）</option>
+              <option>由人資指派</option>
+            </select>
+          </div>
+
+          <button class="cta" data-action="doskill">送出申請<i class="fa-solid fa-arrow-right"></i></button>
+          <a class="cta cta--ghost" data-view="skills">取消</a>
+        </div>
+
+        <div class="submitted" id="skillDone" hidden>
+          <div class="submitted__mark"><i class="fa-solid fa-check"></i></div>
+          <h1>已送出申請</h1>
+          <p>技能驗證申請已送出，等待驗證人審核。</p>
+          <div class="submitted__steps">
+            <div class="submitted__row"><span>申請項目</span><b id="skillDoneName">SQL 查詢 Lv2</b></div>
+            <div class="submitted__row"><span>驗證人</span><b>林研究員</b></div>
+            <div class="submitted__row"><span>預計審核時間</span><b>3 個工作日內</b></div>
+          </div>
+          <a class="cta" data-view="skills">回我的技能<i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </section>
 
@@ -1515,9 +1666,65 @@ tbody tr:hover{background:var(--surface-2);}
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>設定</h1>
-          <p>個人資料、可工作時段與通知偏好。</p>
+          <p>個人資料、可工作時段、任務負載與通知偏好。</p>
         </div>
-        <div class="placeholder"><i class="fa-solid fa-gear"></i>此區塊在 MVP 規劃中，POC 尚未展開。</div>
+
+        <div class="card-group">
+          <div class="card-group__title">個人資料</div>
+          <div class="set-row"><span class="set-row__label">姓名</span><span class="set-row__val">陳怡君</span></div>
+          <div class="set-row"><span class="set-row__label">員工編號</span><span class="set-row__val">EMP-20431</span></div>
+          <div class="set-row"><span class="set-row__label">部門・職稱<small>由人資維護，不可自行修改</small></span><span class="set-row__val">內容行銷部・內容企劃</span></div>
+          <div class="set-row"><span class="set-row__label">聯絡信箱</span><span class="set-row__val">yijun.chen@company.com</span></div>
+          <div class="set-row"><span class="set-row__label">分機</span><span class="set-row__val"><input type="text" value="2043"></span></div>
+        </div>
+
+        <div class="card-group">
+          <div class="card-group__title">可工作時段<small style="font-weight:400;text-transform:none;letter-spacing:0;"> ・供主管指派任務時參考</small></div>
+          <div class="set-row"><span class="set-row__label">週一</span><span class="notif-cell"><span class="set-row__val">09:00–18:00</span><button class="toggle" aria-pressed="true" aria-label="週一可工作"></button></span></div>
+          <div class="set-row"><span class="set-row__label">週二</span><span class="notif-cell"><span class="set-row__val">09:00–18:00</span><button class="toggle" aria-pressed="true" aria-label="週二可工作"></button></span></div>
+          <div class="set-row"><span class="set-row__label">週三</span><span class="notif-cell"><span class="set-row__val">09:00–18:00</span><button class="toggle" aria-pressed="true" aria-label="週三可工作"></button></span></div>
+          <div class="set-row"><span class="set-row__label">週四</span><span class="notif-cell"><span class="set-row__val">13:00–18:00</span><button class="toggle" aria-pressed="true" aria-label="週四可工作"></button></span></div>
+          <div class="set-row"><span class="set-row__label">週五</span><span class="notif-cell"><span class="set-row__val">09:00–17:00</span><button class="toggle" aria-pressed="true" aria-label="週五可工作"></button></span></div>
+          <div class="set-row"><span class="set-row__label">週末</span><span class="notif-cell"><span class="set-row__val">不接單</span><button class="toggle" aria-pressed="false" aria-label="週末可工作"></button></span></div>
+        </div>
+
+        <div class="card-group">
+          <div class="card-group__title">任務負載上限</div>
+          <div class="set-row"><span class="set-row__label">同時進行的認領任務<small>超過上限時，新任務會顯示為不可認領</small></span>
+            <span class="set-row__val"><select><option>2 件</option><option selected>3 件</option><option>4 件</option><option>5 件</option></select></span></div>
+          <div class="set-row"><span class="set-row__label">每週額外工時上限</span>
+            <span class="set-row__val"><select><option>8 小時</option><option selected>12 小時</option><option>16 小時</option><option>20 小時</option></select></span></div>
+        </div>
+
+        <div class="card-group">
+          <div class="card-group__title">通知偏好</div>
+          <div class="notif-head"><span>站內</span><span>Email</span></div>
+          <div class="set-row"><span class="set-row__label">新任務可認領</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="false" aria-label="Email"></button></span></div>
+          <div class="set-row"><span class="set-row__label">截止前提醒</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="true" aria-label="Email"></button></span></div>
+          <div class="set-row"><span class="set-row__label">逾期通知</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="true" aria-label="Email"></button></span></div>
+          <div class="set-row"><span class="set-row__label">退回修改</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="true" aria-label="Email"></button></span></div>
+          <div class="set-row"><span class="set-row__label">驗收完成</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="false" aria-label="Email"></button></span></div>
+          <div class="set-row"><span class="set-row__label">月度結算</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="true" aria-label="Email"></button></span></div>
+        </div>
+
+        <div class="card-group">
+          <div class="card-group__title">外觀</div>
+          <div class="set-row"><span class="set-row__label">主題</span>
+            <div class="segment" style="margin:0;max-width:260px;" data-theme-choice>
+              <button class="seg" data-theme-set="system">跟隨系統</button>
+              <button class="seg" data-theme-set="light">淺色</button>
+              <button class="seg" data-theme-set="dark">深色</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-group">
+          <div class="card-group__title">帳號</div>
+          <div class="set-row"><span class="set-row__label">修改密碼</span><span class="set-row__val"><i class="fa-solid fa-chevron-right" style="color:var(--ink-mute);"></i></span></div>
+          <div class="set-row"><span class="set-row__label">綁定的裝置</span><span class="set-row__val">2 台</span></div>
+        </div>
+
+        <button class="logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i>登出</button>
       </section>
 
       <!-- ---------- HELP ---------- -->
@@ -1525,9 +1732,86 @@ tbody tr:hover{background:var(--surface-2);}
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>說明與規則</h1>
-          <p>點數規則、任務狀態機與獎金核算方式。</p>
+          <p>點數規則、獎金核算、任務狀態與常見問題。</p>
         </div>
-        <div class="placeholder"><i class="fa-solid fa-circle-question"></i>此區塊在 MVP 規劃中，POC 尚未展開。</div>
+
+        <div class="section">
+          <div class="section__head"><h2>點數怎麼來</h2></div>
+          <div class="rule">
+            <h3>兩種工作類型</h3>
+            <p><b>本薪工作</b>：底薪涵蓋的日常與必要工作，不產生額外點數，但會記錄完成率、準時率與品質。</p>
+            <p><b>認領工作</b>：自由認領、可產生額外點數的選擇任務。<b>只有通過主管驗收後</b>才會產生「有效點數」。</p>
+          </div>
+          <div class="rule">
+            <h3>哪些點數不算獎金</h3>
+            <p>待驗收、被退回、以及進入爭議的點數，都不列入當月獎金；等狀態確定後才會計入。</p>
+            <p>點數若有人工調整，一定會附上原因、操作者與稽核紀錄。</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section__head"><h2>獎金怎麼算</h2></div>
+          <div class="card formula">
+            <div class="formula__cell"><b class="num">有效點數</b><small>當月通過驗收</small></div>
+            <span class="formula__op">×</span>
+            <div class="formula__cell"><b class="num">點值</b><small>人資／財務設定</small></div>
+            <span class="formula__op">×</span>
+            <div class="formula__cell"><b class="num">部門達成率係數</b><small>依部門營收／毛利</small></div>
+            <div class="formula__eq"><span>＝</span><b class="num" style="font-size:var(--fs-20);">個人當月獎金</b></div>
+          </div>
+          <p class="chart__say" style="margin-top:12px;">點值與部門達成率係數每月由人資／財務設定並公告；係數非個人可完全控制，因此 Dashboard 會同時顯示你的有效點數與部門達成率，而不是只給最終金額。</p>
+        </div>
+
+        <div class="section">
+          <div class="section__head"><h2>任務會經過哪些狀態</h2></div>
+          <div class="rule">
+            <h3>正常流程</h3>
+            <div class="flow">
+              <span class="flow__node">開放認領</span><i class="fa-solid fa-arrow-right"></i>
+              <span class="flow__node">已認領</span><i class="fa-solid fa-arrow-right"></i>
+              <span class="flow__node">進行中</span><i class="fa-solid fa-arrow-right"></i>
+              <span class="flow__node">待驗收</span><i class="fa-solid fa-arrow-right"></i>
+              <span class="flow__node">已完成</span>
+            </div>
+            <h3 style="margin-top:16px;">例外狀態</h3>
+            <div class="flow flow--exc">
+              <span class="flow__node">需修改</span>
+              <span class="flow__node">已逾期</span>
+              <span class="flow__node">爭議中</span>
+              <span class="flow__node">重新開放</span>
+              <span class="flow__node">已取消</span>
+            </div>
+            <p style="margin-top:12px;">主管退回時必須填寫原因與修改要求；退回後原截止日不會自動延長。爭議任務會暫停點數與獎金結算，並指派複核人員。</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section__head"><h2>交件與版本</h2></div>
+          <div class="rule">
+            <p>每次交件都會建立一個新版本，保留交件者與時間，<b>不會覆蓋舊版</b>。</p>
+            <p>逾期後預設仍可交件，但會標記為逾期，並納入準時率分析。</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section__head"><h2>常見問題</h2></div>
+          <details class="faq">
+            <summary>認領後可以取消嗎？<i class="fa-solid fa-chevron-down"></i></summary>
+            <p>可以，但必須在遞交任何成果之前、依規則取消，並填寫取消原因。已有交件紀錄的任務不會被無痕刪除。</p>
+          </details>
+          <details class="faq">
+            <summary>為什麼有些任務我看不到？<i class="fa-solid fa-chevron-down"></i></summary>
+            <p>可能是你尚未達到該任務的必要技能等級或認證，或是你目前的進行中任務數／預估工時已達設定的負載上限。</p>
+          </details>
+          <details class="faq">
+            <summary>部門達成率下降，會扣我的點數嗎？<i class="fa-solid fa-chevron-down"></i></summary>
+            <p>不會。達成率只影響「獎金係數」，不會減少你已經賺到的有效點數。</p>
+          </details>
+          <details class="faq">
+            <summary>點數多久結算一次？<i class="fa-solid fa-chevron-down"></i></summary>
+            <p>每月結算一次。人資／財務確認並鎖定後，該月的獎金明細就不可再由一般角色修改。</p>
+          </details>
+        </div>
       </section>
 
     </main>
@@ -1552,10 +1836,10 @@ tbody tr:hover{background:var(--surface-2);}
   var titles={
     login:'饌保堡工作任務系統', home:'首頁'+SUF, browse:'認領任務'+SUF, taskdetail:'任務詳情'+SUF,
     workbench:'工作台'+SUF, deliver:'交件'+SUF, submitted:'交件完成'+SUF, mywork:'我的工作'+SUF, history:'歷史紀錄'+SUF,
-    points:'我的點數'+SUF, metric:'部門達成率'+SUF, notifications:'通知中心'+SUF, skills:'我的技能'+SUF,
+    points:'我的點數'+SUF, metric:'部門達成率'+SUF, notifications:'通知中心'+SUF, skills:'我的技能'+SUF, skillapply:'申請技能驗證'+SUF,
     settings:'設定'+SUF, help:'說明與規則'+SUF
   };
-  var shellViews={home:1,browse:1,taskdetail:1,workbench:1,deliver:1,submitted:1,mywork:1,history:1,points:1,metric:1,notifications:1,skills:1,settings:1,help:1};
+  var shellViews={home:1,browse:1,taskdetail:1,workbench:1,deliver:1,submitted:1,mywork:1,history:1,points:1,metric:1,notifications:1,skills:1,skillapply:1,settings:1,help:1};
 
   var wbSeq=0, pendingDeliver=null, pendingTask='工作';
   var wbCount=document.querySelectorAll('#wbList .wb__item').length;
@@ -1621,6 +1905,22 @@ tbody tr:hover{background:var(--surface-2);}
     });
   }
 
+  function currentThemeMode(){
+    var t=root.getAttribute('data-theme');
+    return (t==='light'||t==='dark') ? t : 'system';
+  }
+  function syncThemeChoice(){
+    var seg=document.querySelector('[data-theme-choice]');
+    if(!seg) return;
+    var m=currentThemeMode();
+    seg.querySelectorAll('.seg').forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-theme-set')===m); });
+  }
+  function setTheme(mode){
+    if(mode==='system'){ root.removeAttribute('data-theme'); try{localStorage.removeItem('dp-theme');}catch(e){} }
+    else { root.setAttribute('data-theme',mode); try{localStorage.setItem('dp-theme',mode);}catch(e){} }
+    syncThemeChoice();
+  }
+
   function show(id){
     if(!titles[id]) id='home';
     var inShell=!!shellViews[id];
@@ -1639,13 +1939,18 @@ tbody tr:hover{background:var(--surface-2);}
     resetFilters(curPanel);
     if(curPanel){
       curPanel.querySelectorAll('.segment').forEach(function(sg){
-        var segs=sg.querySelectorAll('.seg'); if(!segs.length) return;
+        var segs=sg.querySelectorAll('.seg[data-seg]'); if(!segs.length) return;
         segs.forEach(function(s,i){ s.classList.toggle('is-active', i===0); });
         var first=segs[0].getAttribute('data-seg');
         sg.parentElement.querySelectorAll('[data-seg-panel]').forEach(function(p){
           p.hidden = p.getAttribute('data-seg-panel')!==first;
         });
       });
+    }
+    if(id==='settings') syncThemeChoice();
+    if(id==='skillapply'){
+      var sf=document.getElementById('skillForm'), sd=document.getElementById('skillDone'), fc2=document.getElementById('fileChip2');
+      if(sf) sf.hidden=false; if(sd) sd.hidden=true; if(fc2) fc2.hidden=true;
     }
     closeDrawer();
     window.scrollTo(0,0);
@@ -1658,9 +1963,7 @@ tbody tr:hover{background:var(--surface-2);}
       var a=act.dataset.action;
       if(a==='theme'){
         var cur=root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-        var next=cur==='dark'?'light':'dark';
-        root.setAttribute('data-theme',next);
-        try{localStorage.setItem('dp-theme',next);}catch(e){}
+        setTheme(cur==='dark'?'light':'dark');
       } else if(a==='drawer'){
         var open=!sidebar.classList.contains('is-open');
         sidebar.classList.toggle('is-open',open);
@@ -1728,13 +2031,31 @@ tbody tr:hover{background:var(--surface-2);}
         }
         var eff=document.getElementById('effPoints');
         if(eff){ eff.textContent=String((parseInt(eff.textContent,10)||0)+n); }
-      } else if(a==='apply'){
-        act.innerHTML='已送出申請，待驗證 <i class="fa-solid fa-check"></i>';
+      } else if(a==='pickfile2'){
+        var f2=document.getElementById('fileChip2'); if(f2) f2.hidden=false;
+      } else if(a==='rmfile2'){
+        var f2b=document.getElementById('fileChip2'); if(f2b) f2b.hidden=true;
+      } else if(a==='doskill'){
+        var nm=(document.getElementById('skName')||{value:'技能'}).value.trim()||'技能';
+        var lvBtn=document.querySelector('[data-view-panel="skillapply"] .chip.is-active');
+        var lv=lvBtn?lvBtn.textContent.trim():'Lv1';
+        var dn=document.getElementById('skillDoneName'); if(dn) dn.textContent=nm+' '+lv;
+        document.getElementById('skillForm').hidden=true;
+        document.getElementById('skillDone').hidden=false;
+        window.scrollTo(0,0);
+      } else if(a==='logout'){
+        show('login');
       }
       return;
     }
 
-    var seg=e.target.closest('.seg');
+    var tseg=e.target.closest('.seg[data-theme-set]');
+    if(tseg){ setTheme(tseg.getAttribute('data-theme-set')); return; }
+
+    var tg=e.target.closest('.toggle');
+    if(tg){ tg.setAttribute('aria-pressed', tg.getAttribute('aria-pressed')==='true'?'false':'true'); return; }
+
+    var seg=e.target.closest('.seg[data-seg]');
     if(seg){
       var sgWrap=seg.closest('.segment');
       sgWrap.querySelectorAll('.seg').forEach(function(s){ s.classList.toggle('is-active', s===seg); });
@@ -1770,6 +2091,7 @@ tbody tr:hover{background:var(--surface-2);}
 
   updateWbBadge();
   refreshWbEmpty();
+  syncThemeChoice();
 
   var start=location.hash.slice(1);
   show(start && titles[start] ? start : 'login');
