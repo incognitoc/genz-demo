@@ -1,0 +1,1779 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>饌保堡工作任務系統</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+/* ============ Tokens ============ */
+:root{
+  /* neutrals — warm greige, deliberately biased toward the amber accent */
+  --shell:#ECE9E2;
+  --shell-line:#DED9CE;
+  --bg:#FAF8F4;
+  --surface:#FFFFFF;
+  --surface-2:#F4F1EB;
+  --ink:#211F1A;
+  --ink-mid:#57534A;
+  --ink-mute:#837D71;
+  --line:#E3DED4;
+  --line-strong:#D2CCBE;
+
+  /* brand — amber gold, CTA only */
+  --brand:#986309;
+  --brand-press:#7A4F06;
+  --brand-tint:#F4EADB;
+  --on-brand:#FFFFFF;
+
+  /* semantic — separate from brand, never decorative */
+  --ok:#1E7A48;      --ok-tint:#E4F1E9;
+  --alert:#B32718;   --alert-tint:#F9E9E6;
+  --wait:#3D5A72;    --wait-tint:#E9EFF3;
+
+  --radius-sm:8px;
+  --radius-md:12px;
+  --pill:999px;
+  --shadow-sm:0 1px 2px rgba(33,31,26,.04), 0 2px 6px rgba(33,31,26,.05);
+  --shadow-md:0 2px 8px rgba(33,31,26,.06), 0 8px 24px rgba(33,31,26,.06);
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:40px; --s6:48px; --s8:64px; --s12:96px;
+
+  --fs-12:12px; --fs-14:14px; --fs-16:16px; --fs-20:20px; --fs-24:24px; --fs-32:32px;
+
+  --sidebar-w:248px;
+  --tabbar-h:60px;
+  --appbar-h:56px;
+
+  --font-display:"Outfit","Noto Sans TC",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-body:"Noto Sans TC","Outfit",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-num:"Outfit","Noto Sans TC",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --shell:#1B1813;
+    --shell-line:#2E2920;
+    --bg:#131009;
+    --surface:#2B251C;
+    --surface-2:#37301F;
+    --ink:#F3EEE3;
+    --ink-mid:#C6BEAD;
+    --ink-mute:#968E7C;
+    --line:#403829;
+    --line-strong:#524937;
+
+    --brand:#E1A845;
+    --brand-press:#CD962F;
+    --brand-tint:#3A2F19;
+    --on-brand:#1C1810;
+
+    --ok:#63C58D;      --ok-tint:#20321F;
+    --alert:#E88D80;    --alert-tint:#3A241D;
+    --wait:#96B6CD;     --wait-tint:#212E38;
+
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.34);
+    --shadow-md:0 4px 12px rgba(0,0,0,.36), 0 12px 32px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --shell:#1B1813;
+  --shell-line:#2E2920;
+  --bg:#131009;
+  --surface:#2B251C;
+  --surface-2:#37301F;
+  --ink:#F3EEE3;
+  --ink-mid:#C6BEAD;
+  --ink-mute:#968E7C;
+  --line:#403829;
+  --line-strong:#524937;
+
+  --brand:#E1A845;
+  --brand-press:#CD962F;
+  --brand-tint:#3A2F19;
+  --on-brand:#1C1810;
+
+  --ok:#63C58D;      --ok-tint:#20321F;
+  --alert:#E88D80;    --alert-tint:#3A241D;
+  --wait:#96B6CD;     --wait-tint:#212E38;
+
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.34);
+  --shadow-md:0 4px 12px rgba(0,0,0,.36), 0 12px 32px rgba(0,0,0,.4);
+}
+
+/* ============ Base ============ */
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:var(--fs-16);
+  line-height:1.5;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--font-display);line-height:1.2;text-wrap:balance;margin:0;font-weight:600;}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:0;background:none;color:inherit;}
+img{max-width:100%;}
+[hidden]{display:none!important;}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+.num{font-family:var(--font-num);font-variant-numeric:tabular-nums;}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important;}
+}
+
+/* ============ App frame ============ */
+.app{min-height:100vh;}
+
+/* --- App bar (mobile) --- */
+.appbar{
+  position:sticky;top:0;z-index:40;
+  height:var(--appbar-h);
+  display:flex;align-items:center;gap:var(--s2);
+  padding:0 var(--s2);
+  background:var(--shell);
+  border-bottom:1px solid var(--shell-line);
+}
+.appbar__brand{
+  flex:1;min-width:0;display:flex;align-items:center;gap:var(--s1);
+}
+.appbar__brand > i{display:none;}
+.brand__text{display:flex;flex-direction:column;min-width:0;line-height:1.18;}
+.brand__name{
+  font-family:var(--font-display);font-weight:700;font-size:var(--fs-16);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.brand__sub{
+  font-size:var(--fs-12);color:var(--ink-mute);font-weight:500;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.iconbtn{
+  width:40px;height:40px;flex:0 0 40px;
+  display:grid;place-items:center;
+  border-radius:var(--radius-sm);
+  color:var(--ink-mid);font-size:var(--fs-16);
+  transition:background .15s ease,color .15s ease;
+}
+.iconbtn:hover{background:var(--surface-2);color:var(--ink);}
+.iconbtn--badge{position:relative;}
+.iconbtn--badge::after{
+  content:attr(data-count);
+  position:absolute;top:3px;right:3px;
+  min-width:16px;height:16px;padding:0 4px;
+  background:var(--alert);color:#fff;
+  font-family:var(--font-num);font-size:10px;font-weight:600;line-height:16px;
+  text-align:center;border-radius:var(--pill);
+}
+.appbar__theme{display:none;}
+.avatar{
+  width:32px;height:32px;flex:0 0 32px;border-radius:var(--pill);
+  background:var(--brand-tint);color:var(--brand);
+  display:grid;place-items:center;
+  font-family:var(--font-num);font-weight:600;font-size:var(--fs-14);
+}
+.appbar__user{
+  display:flex;align-items:center;gap:var(--s1);
+  padding:2px;border-radius:var(--pill);
+  transition:background .15s ease;
+}
+.appbar__user:hover{background:var(--surface-2);}
+.appbar__user-name{
+  display:none;
+  font-size:var(--fs-14);font-weight:500;color:var(--ink-mid);white-space:nowrap;
+}
+
+/* --- Sidebar (desktop) / drawer (mobile) --- */
+.sidebar{
+  position:fixed;inset:0 auto 0 0;z-index:60;
+  width:var(--sidebar-w);
+  background:var(--shell);
+  border-right:1px solid var(--shell-line);
+  display:flex;flex-direction:column;
+  padding:var(--s3) var(--s2);
+  transform:translateX(-100%);
+  transition:transform .22s ease;
+}
+.sidebar.is-open{transform:translateX(0);}
+.sidebar__brand{
+  padding:0 var(--s2) var(--s3);
+  display:flex;align-items:center;gap:var(--s2);
+}
+.sidebar__brand > i{color:var(--brand);font-size:var(--fs-24);flex:0 0 auto;}
+.sidebar__brand .brand__name{font-size:var(--fs-20);}
+.sidebar__brand .brand__sub{font-size:var(--fs-12);}
+.nav{display:flex;flex-direction:column;gap:2px;}
+.nav__label{
+  font-size:var(--fs-12);font-weight:600;letter-spacing:.06em;
+  color:var(--ink-mute);
+  padding:var(--s3) var(--s2) var(--s1);
+}
+.nav__item{
+  display:flex;align-items:center;gap:var(--s1);
+  height:40px;padding:8px var(--s2);
+  border-radius:var(--radius-sm);
+  color:var(--ink-mid);font-size:var(--fs-14);font-weight:500;
+  border:1px solid transparent;
+  transition:background .15s ease,color .15s ease;
+}
+.nav__item i{width:18px;text-align:center;font-size:var(--fs-16);}
+.nav__item:hover{background:var(--surface-2);color:var(--ink);}
+.nav__item.is-active{
+  background:var(--surface);color:var(--ink);font-weight:600;
+  border-color:var(--line);
+}
+
+.scrim{
+  position:fixed;inset:0;z-index:55;
+  background:rgba(20,17,12,.4);
+  opacity:0;pointer-events:none;transition:opacity .2s ease;
+}
+.scrim.is-open{opacity:1;pointer-events:auto;}
+
+/* --- Bottom tab (mobile) --- */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  height:calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  padding-bottom:env(safe-area-inset-bottom);
+  display:grid;grid-template-columns:repeat(5,1fr);
+  background:var(--shell);
+  border-top:1px solid var(--shell-line);
+}
+.tab{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  color:var(--ink-mute);font-size:11px;font-weight:500;
+  transition:color .15s ease;
+}
+.tab i{font-size:17px;}
+.tab.is-active{color:var(--brand);}
+
+/* ============ Layout ============ */
+.main{
+  padding:var(--s3) var(--s2) calc(var(--tabbar-h) + var(--s6));
+  max-width:560px;margin:0 auto;
+}
+.view{animation:fade .22s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.page-head{margin-bottom:var(--s3);}
+.back{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:var(--fs-14);font-weight:500;color:var(--ink-mid);
+  margin-bottom:var(--s2);
+}
+.back:hover{color:var(--ink);}
+.page-head h1{font-size:var(--fs-24);margin-bottom:var(--s1);}
+.page-head p{color:var(--ink-mid);font-size:var(--fs-14);max-width:40em;}
+
+.section{margin-top:var(--s6);}
+.section__head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2);
+  margin-bottom:var(--s3);
+}
+.section__head h2{font-size:var(--fs-20);}
+.section__head .hint{font-size:var(--fs-14);color:var(--ink-mid);}
+.section__more{
+  font-size:var(--fs-14);font-weight:500;color:var(--ink-mid);
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.section__more:hover{color:var(--ink);}
+
+/* ============ Components ============ */
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);
+}
+.card--pad{padding:var(--s3);}
+
+/* greeting */
+.greeting{margin-bottom:var(--s4);}
+.greeting h1{font-size:var(--fs-24);margin-bottom:6px;}
+.greeting p{color:var(--ink-mid);font-size:var(--fs-16);max-width:34em;}
+
+/* hero status */
+.hero{overflow:hidden;}
+.hero__row{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s2);
+  padding:var(--s3);
+  border-bottom:1px solid var(--line);
+  transition:background .15s ease;
+}
+.hero__row:last-child{border-bottom:0;}
+.hero__row:hover{background:var(--surface-2);}
+.hero__k{font-size:var(--fs-14);color:var(--ink-mid);display:flex;flex-direction:column;gap:2px;}
+.hero__k small{font-size:var(--fs-12);color:var(--ink-mute);}
+.hero__v{
+  font-family:var(--font-num);font-variant-numeric:tabular-nums;
+  font-size:var(--fs-24);font-weight:600;
+  display:flex;align-items:center;gap:var(--s1);white-space:nowrap;
+}
+.hero__v i{font-size:var(--fs-14);color:var(--ink-mute);}
+.hero__foot{
+  padding:14px var(--s3);
+  font-size:var(--fs-12);color:var(--ink-mute);
+  background:var(--surface-2);
+  display:flex;align-items:center;gap:var(--s1);
+}
+
+/* task list */
+.tasklist{display:flex;flex-direction:column;gap:var(--s2);}
+.task{
+  display:block;padding:var(--s3);cursor:pointer;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);
+  transition:border-color .15s ease,transform .15s ease;
+}
+.task:hover{border-color:var(--line-strong);transform:translateY(-1px);}
+.task__title{font-family:var(--font-display);font-weight:600;font-size:var(--fs-16);margin-bottom:var(--s1);}
+.task__meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+.task__foot{
+  display:flex;flex-wrap:wrap;gap:var(--s2);
+  font-size:var(--fs-12);color:var(--ink-mute);
+}
+.task__foot span{display:inline-flex;align-items:center;gap:5px;}
+.task__bottom{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:var(--s2);flex-wrap:wrap;margin-top:var(--s2);
+}
+.task__bottom .task__foot{margin-top:0;}
+
+/* compact card-level CTA (認領 / 遞交工作) */
+.mini-cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:36px;padding:0 var(--s2);margin-left:auto;
+  background:var(--brand);color:var(--on-brand);
+  border-radius:var(--radius-sm);
+  font-family:var(--font-display);font-weight:600;font-size:var(--fs-14);
+  white-space:nowrap;transition:background .15s ease;
+}
+.mini-cta:hover{background:var(--brand-press);}
+.mini-cta i{font-size:var(--fs-12);}
+.mini-cta:disabled{
+  background:transparent;color:var(--ink-mute);
+  border:1px solid var(--line-strong);cursor:not-allowed;
+}
+.mini-cta:disabled:hover{background:transparent;}
+
+.badge{
+  display:inline-flex;align-items:center;gap:5px;
+  height:24px;padding:0 10px;
+  border-radius:var(--pill);
+  font-size:var(--fs-12);font-weight:600;line-height:1;
+  border:1px solid var(--line-strong);
+  color:var(--ink-mid);
+  white-space:nowrap;
+}
+.badge--points{border-color:var(--brand);color:var(--brand);}
+.badge--points i{font-size:10px;}
+
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  height:22px;padding:0 10px;border-radius:var(--pill);
+  font-size:var(--fs-12);font-weight:600;line-height:1;white-space:nowrap;
+}
+.pill i{font-size:9px;}
+.pill--work{background:var(--surface-2);color:var(--ink-mid);}
+.pill--wait{background:var(--wait-tint);color:var(--wait);}
+.pill--fix{background:var(--alert-tint);color:var(--alert);}
+.pill--late{background:var(--alert);color:#fff;}
+.pill--done{background:var(--ok-tint);color:var(--ok);}
+
+/* progress items */
+.work{display:flex;flex-direction:column;gap:var(--s2);}
+.work__item{
+  padding:var(--s3);
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);
+}
+.work__item.is-fix{
+  border-left:3px solid var(--alert);
+  border-radius:0 var(--radius-md) var(--radius-md) 0;
+}
+.work__top{display:flex;align-items:center;gap:var(--s1);margin-bottom:10px;}
+.work__title{font-family:var(--font-display);font-weight:600;font-size:var(--fs-16);}
+.work__note{
+  font-size:var(--fs-14);color:var(--ink-mid);
+  display:flex;gap:8px;align-items:flex-start;
+}
+.work__note i{color:var(--alert);margin-top:3px;}
+.work__link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:var(--fs-14);font-weight:500;color:var(--brand);
+}
+.work__bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:var(--s2);flex-wrap:wrap;margin-top:var(--s2);
+}
+
+/* cta */
+.cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--s1);
+  width:100%;height:48px;
+  background:var(--brand);color:var(--on-brand);
+  border-radius:var(--radius-sm);
+  font-family:var(--font-display);font-weight:600;font-size:var(--fs-16);
+  white-space:nowrap;
+  transition:background .15s ease;
+  margin-top:var(--s2);
+}
+.cta:hover{background:var(--brand-press);}
+.cta:disabled{background:var(--surface-2);color:var(--ink-mute);cursor:default;}
+.cta--ghost{
+  background:transparent;color:var(--ink-mid);
+  border:1px solid var(--line-strong);
+}
+.cta--ghost:hover{background:var(--surface-2);color:var(--ink);}
+
+/* chart */
+.chart{padding:var(--s3);}
+.chart svg{width:100%;height:auto;display:block;}
+.chart__legend{display:flex;gap:var(--s3);margin-top:var(--s2);font-size:var(--fs-12);color:var(--ink-mid);}
+.chart__legend span{display:inline-flex;align-items:center;gap:6px;}
+.chart__legend i{width:14px;height:0;border-top:2px solid currentColor;display:inline-block;}
+.chart__legend .k-actual{color:var(--brand);}
+.chart__legend .k-target{color:var(--ink-mute);}
+.chart__co{
+  margin-top:var(--s3);padding-top:var(--s3);
+  border-top:1px solid var(--line);
+  display:flex;align-items:baseline;gap:var(--s2);
+}
+.chart__co b{font-family:var(--font-num);font-size:var(--fs-24);font-weight:600;}
+.chart__co small{font-size:var(--fs-12);color:var(--ink-mute);}
+.chart__say{margin-top:var(--s2);font-size:var(--fs-14);color:var(--ink-mid);}
+
+/* notification list */
+.notis{display:flex;flex-direction:column;}
+.noti{
+  display:flex;gap:var(--s2);align-items:flex-start;
+  padding:var(--s3) 0;
+}
+.noti:not([hidden]) ~ .noti:not([hidden]){border-top:1px solid var(--line);}
+.noti__ic{
+  width:32px;height:32px;flex:0 0 32px;border-radius:var(--radius-sm);
+  display:grid;place-items:center;font-size:var(--fs-14);
+}
+.noti__ic--ok{background:var(--ok-tint);color:var(--ok);}
+.noti__ic--fix{background:var(--alert-tint);color:var(--alert);}
+.noti__ic--new{background:var(--brand-tint);color:var(--brand);}
+.noti__body{flex:1;min-width:0;}
+.noti__body p{font-size:var(--fs-14);}
+.noti__body time{font-size:var(--fs-12);color:var(--ink-mute);}
+
+/* skill gap */
+.gap{display:flex;flex-direction:column;gap:var(--s2);}
+.gap__item{
+  padding:var(--s3);
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+}
+.gap__item p{font-size:var(--fs-14);}
+.gap__item p b{font-weight:600;}
+.gap__item a{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:10px;font-size:var(--fs-14);font-weight:600;color:var(--brand);
+}
+
+/* filter chips */
+.chips{display:flex;gap:var(--s1);flex-wrap:wrap;margin-bottom:var(--s3);}
+.chip{
+  height:32px;padding:0 14px;border-radius:var(--pill);
+  border:1px solid var(--line-strong);
+  font-size:var(--fs-14);font-weight:500;color:var(--ink-mid);
+  transition:background .15s ease,color .15s ease,border-color .15s ease;
+}
+.chip.is-active{background:var(--brand);color:var(--on-brand);border-color:var(--brand);}
+
+/* meta grid (task detail) */
+.metagrid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  overflow:hidden;margin-bottom:var(--s3);
+}
+.metagrid div{background:var(--surface);padding:var(--s2) var(--s3);}
+.metagrid dt{font-size:var(--fs-12);color:var(--ink-mute);margin-bottom:3px;}
+.metagrid dd{margin:0;font-size:var(--fs-14);font-weight:600;}
+
+.prose{font-size:var(--fs-14);color:var(--ink-mid);line-height:1.7;}
+.prose + .prose{margin-top:var(--s2);}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-md);}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:var(--fs-14);}
+th,td{text-align:left;padding:12px var(--s2);border-bottom:1px solid var(--line);white-space:nowrap;}
+th{font-size:var(--fs-12);color:var(--ink-mute);font-weight:600;background:var(--surface-2);}
+td:last-child,th:last-child{text-align:right;}
+tr:last-child td{border-bottom:0;}
+tbody tr:hover{background:var(--surface-2);}
+.t-num{font-family:var(--font-num);font-variant-numeric:tabular-nums;}
+
+/* formula */
+.formula{
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--s2);
+  padding:var(--s3);
+}
+.formula__cell{display:flex;flex-direction:column;gap:2px;}
+.formula__cell b{font-family:var(--font-num);font-size:var(--fs-20);font-weight:600;}
+.formula__cell small{font-size:var(--fs-12);color:var(--ink-mute);}
+.formula__op{font-family:var(--font-num);font-size:var(--fs-20);color:var(--ink-mute);}
+.formula__eq{
+  width:100%;margin-top:var(--s1);padding-top:var(--s3);border-top:1px solid var(--line);
+  display:flex;align-items:baseline;gap:var(--s2);
+}
+.formula__eq b{font-family:var(--font-num);font-size:var(--fs-32);font-weight:700;color:var(--brand);}
+
+.stat-row{display:flex;gap:var(--s2);margin-bottom:var(--s3);}
+.stat{
+  flex:1;padding:var(--s3);
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+}
+.stat dt{font-size:var(--fs-12);color:var(--ink-mute);margin-bottom:6px;}
+.stat dd{margin:0;font-family:var(--font-num);font-variant-numeric:tabular-nums;font-size:var(--fs-24);font-weight:600;}
+
+.placeholder{
+  padding:var(--s6) var(--s3);text-align:center;color:var(--ink-mute);
+  border:1px dashed var(--line-strong);border-radius:var(--radius-md);
+}
+.placeholder i{font-size:var(--fs-24);margin-bottom:var(--s2);display:block;color:var(--ink-mute);}
+
+/* ============ Login ============ */
+.login{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:var(--s4);gap:var(--s5);
+  background:
+    radial-gradient(120% 90% at 50% 0%, var(--brand-tint) 0%, transparent 55%),
+    var(--bg);
+}
+.login__brand{display:flex;align-items:center;gap:var(--s2);}
+.login__brand > i{color:var(--brand);font-size:var(--fs-32);flex:0 0 auto;}
+.login__brand .brand__name{font-family:var(--font-display);font-weight:700;font-size:var(--fs-32);}
+.login__brand .brand__sub{font-size:var(--fs-14);}
+.login__card{
+  width:100%;max-width:360px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-md);
+  padding:var(--s5) var(--s4);
+  display:flex;flex-direction:column;gap:var(--s3);
+}
+.login__card h1{font-size:var(--fs-20);}
+.login__card p{font-size:var(--fs-14);color:var(--ink-mid);}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:var(--fs-12);font-weight:600;color:var(--ink-mid);}
+.field input{
+  height:44px;padding:0 var(--s2);
+  border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  background:var(--bg);color:var(--ink);font-size:var(--fs-16);
+}
+.field input:focus{outline:2px solid var(--brand);outline-offset:0;border-color:var(--brand);}
+.login__hint{font-size:var(--fs-12);color:var(--ink-mute);text-align:center;}
+
+/* ============ Workbench (工作台) ============ */
+.iconbtn--badge[data-count="0"]::after{display:none;}
+.appbar__wb.iconbtn--badge::after{background:var(--brand);color:var(--on-brand);}
+
+.wb{display:flex;flex-direction:column;gap:var(--s2);}
+.wb__item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-areas:"main status" "action action";
+  gap:var(--s2) var(--s3);
+  padding:var(--s3);
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);
+}
+.wb__item[data-state="claimable"]{border-color:var(--brand);}
+.wb__main{grid-area:main;min-width:0;}
+.wb__title{font-family:var(--font-display);font-weight:600;font-size:var(--fs-16);margin-bottom:8px;}
+.wb__status{grid-area:status;justify-self:end;}
+.wb__action{
+  grid-area:action;padding-top:var(--s2);border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s2);flex-wrap:wrap;
+}
+.wb__action .note{font-size:var(--fs-12);color:var(--ink-mute);}
+.wb__action .simlink{font-size:var(--fs-12);font-weight:500;color:var(--ink-mid);text-decoration:underline;text-underline-offset:2px;}
+.wb__empty{
+  padding:var(--s6) var(--s3);text-align:center;color:var(--ink-mute);
+  border:1px dashed var(--line-strong);border-radius:var(--radius-md);
+}
+.wb__empty i{font-size:var(--fs-24);display:block;margin-bottom:var(--s2);}
+
+.pill--claim{background:var(--brand-tint);color:var(--brand);}
+
+/* segmented control */
+.segment{
+  display:flex;gap:4px;padding:4px;margin-bottom:var(--s4);
+  background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);
+}
+.seg{
+  flex:1;height:36px;border-radius:6px;
+  font-family:var(--font-display);font-size:var(--fs-14);font-weight:600;color:var(--ink-mid);
+  white-space:nowrap;transition:background .15s ease,color .15s ease;
+}
+.seg.is-active{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm);}
+
+/* deliver / upload */
+.dropzone{
+  display:flex;flex-direction:column;align-items:center;gap:var(--s1);
+  padding:var(--s5) var(--s3);
+  border:1.5px dashed var(--line-strong);border-radius:var(--radius-md);
+  background:var(--surface-2);text-align:center;
+}
+.dropzone i{font-size:var(--fs-24);color:var(--ink-mute);}
+.dropzone p{font-size:var(--fs-14);color:var(--ink-mid);}
+.dropzone button{
+  height:36px;padding:0 var(--s3);border-radius:var(--radius-sm);
+  border:1px solid var(--line-strong);background:var(--surface);
+  font-family:var(--font-display);font-weight:600;font-size:var(--fs-14);color:var(--ink);
+}
+.dropzone small{font-size:var(--fs-12);color:var(--ink-mute);}
+.filechip{
+  display:flex;align-items:center;gap:var(--s1);
+  margin-top:var(--s2);padding:10px var(--s2);
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);
+  font-size:var(--fs-14);
+}
+.filechip i{color:var(--ok);}
+.filechip .x{margin-left:auto;color:var(--ink-mute);cursor:pointer;}
+.field textarea{
+  min-height:88px;padding:10px var(--s2);resize:vertical;
+  border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  background:var(--bg);color:var(--ink);font-family:inherit;font-size:var(--fs-14);line-height:1.5;
+}
+.field textarea:focus{outline:2px solid var(--brand);outline-offset:0;border-color:var(--brand);}
+
+/* 交件完成 */
+.submitted{
+  max-width:420px;margin:0 auto;text-align:center;
+  padding-top:var(--s6);
+}
+.submitted__mark{
+  width:64px;height:64px;margin:0 auto var(--s3);
+  display:grid;place-items:center;border-radius:var(--pill);
+  background:var(--ok-tint);color:var(--ok);font-size:var(--fs-24);
+}
+.submitted h1{font-size:var(--fs-24);margin-bottom:var(--s1);}
+.submitted > p{color:var(--ink-mid);font-size:var(--fs-14);margin-bottom:var(--s4);}
+.submitted__steps{
+  text-align:left;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-md);
+  padding:var(--s2) var(--s3);margin-bottom:var(--s4);
+}
+.submitted__row{
+  display:flex;justify-content:space-between;gap:var(--s2);
+  padding:12px 0;border-bottom:1px solid var(--line);font-size:var(--fs-14);
+}
+.submitted__row:last-child{border-bottom:0;}
+.submitted__row span{color:var(--ink-mute);}
+.submitted__row b{font-weight:600;}
+
+/* ============ Responsive ============ */
+@media (min-width:1024px){
+  .tabbar{display:none;}
+  .scrim{display:none;}
+  .sidebar{transform:translateX(0);}
+  .app{padding-left:var(--sidebar-w);}
+  .appbar{
+    justify-content:flex-end;gap:var(--s1);
+    padding-right:var(--s5);
+    background:var(--bg);border-bottom:1px solid var(--line);
+  }
+  .appbar__menu,.appbar__brand{display:none;}
+  .appbar__theme{display:grid;}
+  .appbar__user{margin-left:var(--s1);padding:4px 4px 4px 10px;}
+  .appbar__user-name{display:inline;}
+  .main{
+    max-width:840px;
+    padding:var(--s5) var(--s5) var(--s8);
+  }
+  .greeting h1{font-size:var(--fs-32);}
+  .page-head h1{font-size:var(--fs-32);}
+  .hero{display:grid;grid-template-columns:repeat(3,1fr);}
+  .hero__row{
+    flex-direction:column;align-items:flex-start;gap:var(--s2);
+    border-bottom:0;border-right:1px solid var(--line);
+  }
+  .hero__row:last-child{border-right:0;}
+  .hero__foot{grid-column:1/-1;}
+  .stat-row .stat dd{font-size:var(--fs-32);}
+}
+
+@media (min-width:1440px){
+  .app{padding-left:var(--sidebar-w);}
+  .main{max-width:1200px;}
+  .home-grid{
+    display:grid;grid-template-columns:1.4fr 1fr;gap:var(--s5);align-items:start;
+  }
+  .home-grid > div > .section:first-child{margin-top:0;}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ===================== LOGIN ===================== -->
+  <section class="login view" data-view-panel="login">
+    <div class="login__brand">
+      <i class="fa-solid fa-sack-dollar"></i>
+      <div class="brand__text">
+        <span class="brand__name">饌保堡有限公司</span>
+        <span class="brand__sub">工作任務系統</span>
+      </div>
+    </div>
+    <form class="login__card" id="loginForm">
+      <h1>登入你的工作台</h1>
+      <p>用公司帳號登入，查看你的任務、點數與部門達成率。</p>
+      <div class="field">
+        <label for="acc">公司帳號</label>
+        <input id="acc" type="text" value="yijun.chen" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="pw">密碼</label>
+        <input id="pw" type="password" value="demo-demo-demo" autocomplete="current-password">
+      </div>
+      <button type="submit" class="cta" style="margin-top:8px;">登入<i class="fa-solid fa-arrow-right"></i></button>
+      <p class="login__hint">POC 展示用，任何輸入皆可直接登入。</p>
+    </form>
+  </section>
+
+  <!-- ===================== SHELL ===================== -->
+  <div data-view-panel="shell" data-shell>
+    <!-- App bar (mobile) -->
+    <header class="appbar">
+      <button class="iconbtn appbar__menu" data-action="drawer" aria-label="開啟選單"><i class="fa-solid fa-bars"></i></button>
+      <div class="appbar__brand">
+        <i class="fa-solid fa-sack-dollar"></i>
+        <div class="brand__text">
+          <span class="brand__name">饌保堡有限公司</span>
+          <span class="brand__sub">工作任務系統</span>
+        </div>
+      </div>
+      <button class="iconbtn iconbtn--badge appbar__wb" id="wbBtn" data-count="2" data-view="workbench" aria-label="工作台"><i class="fa-solid fa-bag-shopping"></i></button>
+      <button class="iconbtn iconbtn--badge" data-count="3" data-view="notifications" aria-label="通知"><i class="fa-solid fa-bell"></i></button>
+      <button class="iconbtn appbar__theme" data-action="theme" aria-label="切換深色/淺色"><i class="fa-solid fa-circle-half-stroke"></i></button>
+      <div class="appbar__user" data-view="settings" role="button" tabindex="0" aria-label="陳怡君・內容行銷部">
+        <div class="avatar">怡</div>
+        <span class="appbar__user-name">陳怡君・內容行銷部</span>
+      </div>
+    </header>
+
+    <!-- Sidebar / drawer -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <i class="fa-solid fa-sack-dollar"></i>
+        <div class="brand__text">
+          <span class="brand__name">饌保堡有限公司</span>
+          <span class="brand__sub">工作任務系統</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <span class="nav__label">主要工作</span>
+        <a class="nav__item" data-view="home"><i class="fa-solid fa-house"></i>首頁</a>
+        <a class="nav__item" data-view="browse"><i class="fa-solid fa-list-check"></i>認領任務</a>
+        <a class="nav__item" data-view="workbench"><i class="fa-solid fa-bag-shopping"></i>工作台</a>
+        <a class="nav__item" data-view="mywork"><i class="fa-solid fa-folder-open"></i>我的工作</a>
+        <a class="nav__item" data-view="points"><i class="fa-solid fa-coins"></i>我的點數</a>
+        <span class="nav__label">能力發展</span>
+        <a class="nav__item" data-view="skills"><i class="fa-solid fa-graduation-cap"></i>我的技能</a>
+        <span class="nav__label">系統</span>
+        <a class="nav__item" data-view="settings"><i class="fa-solid fa-gear"></i>設定</a>
+        <a class="nav__item" data-view="help"><i class="fa-solid fa-circle-question"></i>說明與規則</a>
+      </nav>
+    </aside>
+    <div class="scrim" id="scrim" data-action="drawer"></div>
+
+    <!-- ===================== MAIN ===================== -->
+    <main class="main" id="main">
+
+      <!-- ---------- HOME ---------- -->
+      <section class="view" data-view-panel="home">
+        <div class="greeting">
+          <h1>嗨，怡君</h1>
+          <p>這個月你已累積 <span class="num">46</span> 點有效點數，還有 <span class="num">3</span> 件工作等你處理。</p>
+        </div>
+
+        <div class="home-grid">
+          <div>
+            <!-- Hero status -->
+            <div class="section">
+              <div class="section__head"><h2>本月累積點數</h2></div>
+              <div class="card hero" role="group" aria-label="本月點數與獎金概況">
+                <a class="hero__row" data-view="points">
+                  <span class="hero__k">本月有效點數<small>待驗收 12 點</small></span>
+                  <span class="hero__v num">46 點<i class="fa-solid fa-chevron-right"></i></span>
+                </a>
+                <a class="hero__row" data-view="points">
+                  <span class="hero__k">預計獎金<small>點值 NT$200／點</small></span>
+                  <span class="hero__v num">NT$9,660<i class="fa-solid fa-chevron-right"></i></span>
+                </a>
+                <a class="hero__row" data-view="metric">
+                  <span class="hero__k">部門達成率係數<small>依部門營收與毛利計算</small></span>
+                  <span class="hero__v num">1.05<i class="fa-solid fa-chevron-right"></i></span>
+                </a>
+                <div class="hero__foot"><i class="fa-solid fa-rotate"></i>資料更新：今天 09:30</div>
+              </div>
+            </div>
+
+            <!-- 待認領 -->
+            <div class="section">
+              <div class="section__head">
+                <h2>待認領工作</h2>
+                <span class="hint">符合你技能的推薦</span>
+              </div>
+              <div class="tasklist">
+                <div class="task" data-view="taskdetail">
+                  <div class="task__title">撰寫 API 整合說明文件</div>
+                  <div class="task__meta">
+                    <span class="badge">技術寫作 Lv2</span>
+                    <span class="badge badge--points"><i class="fa-solid fa-plus"></i>8 點</span>
+                  </div>
+                  <div class="task__bottom">
+                    <div class="task__foot">
+                      <span><i class="fa-solid fa-flag-checkered"></i>截止 9／12</span>
+                      <span><i class="fa-solid fa-clock"></i>預估 6 小時</span>
+                    </div>
+                    <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+                  </div>
+                </div>
+                <div class="task" data-view="taskdetail">
+                  <div class="task__title">使用者訪談逐字稿整理</div>
+                  <div class="task__meta">
+                    <span class="badge">訪談記錄 Lv1</span>
+                    <span class="badge badge--points"><i class="fa-solid fa-plus"></i>5 點</span>
+                  </div>
+                  <div class="task__bottom">
+                    <div class="task__foot">
+                      <span><i class="fa-solid fa-flag-checkered"></i>截止 9／10</span>
+                      <span><i class="fa-solid fa-clock"></i>預估 4 小時</span>
+                    </div>
+                    <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+                  </div>
+                </div>
+                <div class="task" data-view="taskdetail">
+                  <div class="task__title">競品功能對照表</div>
+                  <div class="task__meta">
+                    <span class="badge">市場研究 Lv2</span>
+                    <span class="badge badge--points"><i class="fa-solid fa-plus"></i>6 點</span>
+                  </div>
+                  <div class="task__bottom">
+                    <div class="task__foot">
+                      <span><i class="fa-solid fa-flag-checkered"></i>截止 9／15</span>
+                      <span><i class="fa-solid fa-clock"></i>預估 5 小時</span>
+                    </div>
+                    <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+                  </div>
+                </div>
+              </div>
+              <a class="cta" data-view="browse">瀏覽所有可認領任務<i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <!-- 進行中 -->
+            <div class="section">
+              <div class="section__head">
+                <h2>我的進行中工作</h2>
+                <a class="section__more" data-view="mywork">查看全部（5）<i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+              <div class="work">
+                <div class="work__item is-fix">
+                  <div class="work__top">
+                    <span class="pill pill--fix"><i class="fa-solid fa-circle"></i>需修改</span>
+                    <span class="work__title">官網改版文案 v2</span>
+                  </div>
+                  <p class="work__note"><i class="fa-solid fa-rotate-left"></i>王主管退回：「第二段語氣需更貼近一般讀者，避免行話。」</p>
+                  <div class="work__bottom">
+                    <a class="work__link" data-view="mywork">查看完整修改要求<i class="fa-solid fa-arrow-right"></i></a>
+                    <button class="mini-cta" data-action="deliver" data-task="官網改版文案 v2">交件<i class="fa-solid fa-arrow-right"></i></button>
+                  </div>
+                </div>
+                <div class="work__item">
+                  <div class="work__top">
+                    <span class="pill pill--work"><i class="fa-solid fa-circle"></i>進行中</span>
+                    <span class="work__title">九月電子報排版</span>
+                  </div>
+                  <p class="work__note" style="color:var(--ink-mute)">剩 2 天到期・尚未遞交任何版本</p>
+                  <div class="work__bottom">
+                    <span></span>
+                    <button class="mini-cta" data-action="deliver" data-task="九月電子報排版">交件<i class="fa-solid fa-arrow-right"></i></button>
+                  </div>
+                </div>
+                <div class="work__item">
+                  <div class="work__top">
+                    <span class="pill pill--wait"><i class="fa-solid fa-circle"></i>待驗收</span>
+                    <span class="work__title">產品發表會報名頁</span>
+                  </div>
+                  <p class="work__note" style="color:var(--ink-mute)">已遞交 v1・等待王主管驗收</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <!-- 達成率 -->
+            <div class="section">
+              <div class="section__head">
+                <h2>近三個月部門達成率</h2>
+                <a class="section__more" data-view="metric">查看明細<i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+              <div class="card chart">
+                <svg viewBox="0 0 320 160" role="img" aria-label="近三個月部門達成率折線圖：實際達成率由 92% 上升至 105%，目標為 100%">
+                  <line x1="40" y1="40" x2="300" y2="40" stroke="var(--line)" stroke-width="1"/>
+                  <line x1="40" y1="70" x2="300" y2="70" stroke="var(--line)" stroke-width="1"/>
+                  <line x1="40" y1="100" x2="300" y2="100" stroke="var(--line)" stroke-width="1"/>
+                  <text x="30" y="44" text-anchor="end" font-size="10" fill="var(--ink-mute)">110</text>
+                  <text x="30" y="74" text-anchor="end" font-size="10" fill="var(--ink-mute)">100</text>
+                  <text x="30" y="104" text-anchor="end" font-size="10" fill="var(--ink-mute)">90</text>
+                  <path d="M40 70 L300 70" stroke="var(--ink-mute)" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+                  <path d="M40 94 L160 82 L300 55 L300 118 L40 118 Z" fill="var(--brand)" fill-opacity="0.10"/>
+                  <path d="M40 94 L160 82 L300 55" stroke="var(--brand)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="40" cy="94" r="3.5" fill="var(--brand)"/>
+                  <circle cx="160" cy="82" r="3.5" fill="var(--brand)"/>
+                  <circle cx="300" cy="55" r="4.5" fill="var(--brand)" stroke="var(--surface)" stroke-width="2"/>
+                  <text x="40" y="150" text-anchor="middle" font-size="11" fill="var(--ink-mute)">6 月</text>
+                  <text x="160" y="150" text-anchor="middle" font-size="11" fill="var(--ink-mute)">7 月</text>
+                  <text x="300" y="150" text-anchor="middle" font-size="11" fill="var(--ink-mute)">8 月</text>
+                </svg>
+                <div class="chart__legend">
+                  <span class="k-actual"><i></i>實際達成率</span>
+                  <span class="k-target"><i style="border-top-style:dashed"></i>目標</span>
+                </div>
+                <div class="chart__co">
+                  <b class="num">1.05</b><small>目前獎金係數（8 月達成 105%）</small>
+                </div>
+                <p class="chart__say">係數依部門整體營收與毛利計算，非個人可完全控制；你的個人有效點數不會因此減少。</p>
+              </div>
+            </div>
+
+            <!-- 通知 -->
+            <div class="section">
+              <div class="section__head">
+                <h2>近期通知</h2>
+                <a class="section__more" data-view="notifications">全部通知<i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+              <div class="card card--pad notis">
+                <div class="noti">
+                  <div class="noti__ic noti__ic--ok"><i class="fa-solid fa-circle-check"></i></div>
+                  <div class="noti__body">
+                    <p>「新春主視覺海報」已通過驗收，<b>+7 點</b>已入帳。</p>
+                    <time>2 小時前</time>
+                  </div>
+                </div>
+                <div class="noti">
+                  <div class="noti__ic noti__ic--fix"><i class="fa-solid fa-rotate-left"></i></div>
+                  <div class="noti__body">
+                    <p>「官網改版文案 v2」被退回，請查看修改要求。</p>
+                    <time>5 小時前</time>
+                  </div>
+                </div>
+                <div class="noti">
+                  <div class="noti__ic noti__ic--new"><i class="fa-solid fa-plus"></i></div>
+                  <div class="noti__body">
+                    <p>3 個符合你「技術寫作」技能的任務已開放認領。</p>
+                    <time>1 天前</time>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 技能缺口 -->
+            <div class="section">
+              <div class="section__head"><h2>補這些技能可多接任務</h2></div>
+              <div class="gap">
+                <div class="gap__item">
+                  <p>通過 <b>SQL 查詢 Lv2</b> 後，可多接 <b class="num">4</b> 個資料分析類任務。</p>
+                  <a data-view="skills">前往申請技能<i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="gap__item">
+                  <p>通過 <b>英文簡報 Lv1</b> 後，可多接 <b class="num">2</b> 個跨國專案任務。</p>
+                  <a data-view="skills">前往申請技能<i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- BROWSE ---------- -->
+      <section class="view" data-view-panel="browse">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>認領任務</h1>
+          <p>這裡只顯示符合你已驗證技能與目前負載的選擇任務。認領後會建立你的專屬席位，通過驗收才會產生有效點數。</p>
+        </div>
+        <div class="chips" data-filter-list=".tasklist">
+          <button class="chip is-active" data-filter="*">全部（7）</button>
+          <button class="chip" data-filter="技術寫作">技術寫作（4）</button>
+          <button class="chip" data-filter="訪談記錄">訪談記錄（1）</button>
+          <button class="chip" data-filter="市場研究">市場研究（1）</button>
+          <button class="chip" data-filter="視覺設計">視覺設計（1）</button>
+        </div>
+        <div class="tasklist">
+          <div class="task" data-view="taskdetail" data-tags="技術寫作">
+            <div class="task__title">撰寫 API 整合說明文件</div>
+            <div class="task__meta"><span class="badge">技術寫作 Lv2</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>8 點</span></div>
+            <div class="task__bottom">
+              <div class="task__foot"><span><i class="fa-solid fa-flag-checkered"></i>截止 9／12</span><span><i class="fa-solid fa-clock"></i>預估 6 小時</span><span><i class="fa-solid fa-user-check"></i>驗收：王主管</span></div>
+              <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+          <div class="task" data-view="taskdetail" data-tags="訪談記錄">
+            <div class="task__title">使用者訪談逐字稿整理</div>
+            <div class="task__meta"><span class="badge">訪談記錄 Lv1</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>5 點</span></div>
+            <div class="task__bottom">
+              <div class="task__foot"><span><i class="fa-solid fa-flag-checkered"></i>截止 9／10</span><span><i class="fa-solid fa-clock"></i>預估 4 小時</span><span><i class="fa-solid fa-user-check"></i>驗收：林研究員</span></div>
+              <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+          <div class="task" data-view="taskdetail" data-tags="市場研究">
+            <div class="task__title">競品功能對照表</div>
+            <div class="task__meta"><span class="badge">市場研究 Lv2</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>6 點</span></div>
+            <div class="task__bottom">
+              <div class="task__foot"><span><i class="fa-solid fa-flag-checkered"></i>截止 9／15</span><span><i class="fa-solid fa-clock"></i>預估 5 小時</span><span><i class="fa-solid fa-user-check"></i>驗收：王主管</span></div>
+              <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+          <div class="task" data-view="taskdetail" data-tags="技術寫作">
+            <div class="task__title">部落格文章：導入案例三則</div>
+            <div class="task__meta"><span class="badge">技術寫作 Lv2</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>9 點</span></div>
+            <div class="task__bottom">
+              <div class="task__foot"><span><i class="fa-solid fa-flag-checkered"></i>截止 9／20</span><span><i class="fa-solid fa-clock"></i>預估 8 小時</span><span><i class="fa-solid fa-user-check"></i>驗收：王主管</span></div>
+              <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+          <div class="task" data-view="taskdetail" data-tags="技術寫作">
+            <div class="task__title">產品說明影片腳本</div>
+            <div class="task__meta"><span class="badge">技術寫作 Lv3</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>10 點</span></div>
+            <div class="task__bottom">
+              <div class="task__foot"><span><i class="fa-solid fa-lock"></i>需 Lv3・你目前 Lv2</span></div>
+              <button class="mini-cta" disabled>資格不符</button>
+            </div>
+          </div>
+          <div class="task" data-view="taskdetail" data-tags="技術寫作">
+            <div class="task__title">FAQ 內容盤點與更新</div>
+            <div class="task__meta"><span class="badge">技術寫作 Lv1</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>4 點</span></div>
+            <div class="task__bottom">
+              <div class="task__foot"><span><i class="fa-solid fa-flag-checkered"></i>截止 9／18</span><span><i class="fa-solid fa-clock"></i>預估 3 小時</span><span><i class="fa-solid fa-user-check"></i>驗收：王主管</span></div>
+              <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+          <div class="task" data-view="taskdetail" data-tags="視覺設計">
+            <div class="task__title">活動主視覺與社群圖組</div>
+            <div class="task__meta"><span class="badge">視覺設計 Lv1</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>7 點</span></div>
+            <div class="task__bottom">
+              <div class="task__foot"><span><i class="fa-solid fa-flag-checkered"></i>截止 9／22</span><span><i class="fa-solid fa-clock"></i>預估 6 小時</span><span><i class="fa-solid fa-user-check"></i>驗收：陳設計總監</span></div>
+              <button class="mini-cta" data-action="claim">認領<i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- TASK DETAIL ---------- -->
+      <section class="view" data-view-panel="taskdetail">
+        <div class="page-head">
+          <a class="back" data-view="browse"><i class="fa-solid fa-arrow-left"></i>回認領任務</a>
+          <h1>撰寫 API 整合說明文件</h1>
+          <p>技術文件專案・開放認領中</p>
+        </div>
+        <dl class="metagrid">
+          <div><dt>任務類型</dt><dd>選擇任務（產生點數）</dd></div>
+          <div><dt>點數</dt><dd>8 點</dd></div>
+          <div><dt>技能需求</dt><dd>技術寫作 Lv2 以上</dd></div>
+          <div><dt>預估工時</dt><dd>6 小時</dd></div>
+          <div><dt>截止日</dt><dd>2026／09／12</dd></div>
+          <div><dt>驗收者</dt><dd>王主管</dd></div>
+        </dl>
+        <p class="prose">為新版對外 API 撰寫整合說明，涵蓋認證流程、常見錯誤碼、三個語言的範例呼叫。需與工程團隊確認技術細節後產出。</p>
+        <p class="prose"><b>交付格式：</b>Markdown 文件 + 範例程式碼片段，遞交至任務頁面。每次遞交會建立新版本，不會覆蓋舊版。</p>
+        <button class="cta" data-action="claim">認領此任務<i class="fa-solid fa-arrow-right"></i></button>
+        <a class="cta cta--ghost" data-view="browse">返回列表</a>
+        <p class="login__hint" style="margin-top:16px;">認領後任務會加入你的「工作台」，其他人無法同時認領同一席位。</p>
+      </section>
+
+      <!-- ---------- WORKBENCH（工作台） ---------- -->
+      <section class="view" data-view-panel="workbench">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>工作台</h1>
+          <p>你已認領、尚未結算的工作都在這裡。完成後點「交件」上傳成果；通過審核後即可領取點數。</p>
+        </div>
+
+        <div class="wb" id="wbList">
+          <div class="wb__item" data-state="review" data-id="wb-seed-1">
+            <div class="wb__main">
+              <div class="wb__title">競品功能對照表</div>
+              <div class="task__meta"><span class="badge">市場研究 Lv2</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>6 點</span></div>
+            </div>
+            <div class="wb__status"><span class="pill pill--wait"><i class="fa-solid fa-circle"></i>審核中</span></div>
+            <div class="wb__action">
+              <span class="note">已交件 v1（9／16）・等待王主管審核</span>
+              <a class="simlink" data-action="simpass" data-id="wb-seed-1" data-points="6">（示範）模擬審核通過</a>
+            </div>
+          </div>
+
+          <div class="wb__item" data-state="claimable" data-id="wb-seed-2">
+            <div class="wb__main">
+              <div class="wb__title">使用者訪談逐字稿整理</div>
+              <div class="task__meta"><span class="badge">訪談記錄 Lv1</span><span class="badge badge--points"><i class="fa-solid fa-plus"></i>5 點</span></div>
+            </div>
+            <div class="wb__status"><span class="pill pill--claim"><i class="fa-solid fa-circle"></i>可領點數</span></div>
+            <div class="wb__action">
+              <span class="note">9／15 審核通過</span>
+              <button class="mini-cta" data-action="claimpoints" data-id="wb-seed-2" data-points="5">領取 5 點<i class="fa-solid fa-coins"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="wb__empty" id="wbEmpty" hidden>
+          <i class="fa-solid fa-bag-shopping"></i>
+          工作台目前是空的。<br>去「認領任務」挑選符合你技能的工作。
+          <div style="margin-top:16px;"><a class="mini-cta" data-view="browse" style="margin:0;">前往認領任務</a></div>
+        </div>
+      </section>
+
+      <!-- ---------- DELIVER（交件） ---------- -->
+      <section class="view" data-view-panel="deliver">
+        <div class="page-head">
+          <a class="back" data-view="workbench"><i class="fa-solid fa-arrow-left"></i>回工作台</a>
+          <h1 id="deliverTitle">交件</h1>
+          <p>上傳這次的成果。每次交件都會建立新版本，不會覆蓋舊版；送出後任務進入審核。</p>
+        </div>
+
+        <div class="metagrid" style="grid-template-columns:1fr;">
+          <div><dt>交付格式</dt><dd>PDF、Markdown 或 ZIP，單檔上限 20MB</dd></div>
+        </div>
+
+        <div class="dropzone">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <p>拖曳檔案到這裡，或</p>
+          <button data-action="pickfile">選擇檔案</button>
+          <small>此為 POC 展示，不會真的上傳</small>
+        </div>
+        <div id="fileChip" hidden>
+          <div class="filechip">
+            <i class="fa-solid fa-file-lines"></i>
+            <span>成果檔案_v1.pdf・240 KB</span>
+            <span class="x" data-action="rmfile" aria-label="移除">✕</span>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:24px;">
+          <label for="deliverNote">版本說明</label>
+          <textarea id="deliverNote" placeholder="這次交件的重點、與上一版的差異…"></textarea>
+        </div>
+
+        <button class="cta" data-action="dosubmit">送出交件<i class="fa-solid fa-arrow-right"></i></button>
+        <a class="cta cta--ghost" data-view="workbench">取消</a>
+      </section>
+
+      <!-- ---------- SUBMITTED（交件完成） ---------- -->
+      <section class="view" data-view-panel="submitted">
+        <div class="submitted">
+          <div class="submitted__mark"><i class="fa-solid fa-check"></i></div>
+          <h1>已送出交件</h1>
+          <p>「<span id="submittedTask">工作</span>」已送出，任務進入審核。</p>
+          <div class="submitted__steps">
+            <div class="submitted__row"><span>審核者</span><b>王主管</b></div>
+            <div class="submitted__row"><span>預計審核時間</span><b>2 個工作日內</b></div>
+            <div class="submitted__row"><span>通過後</span><b>可在工作台領取點數</b></div>
+          </div>
+          <button class="cta" data-view="workbench">回工作台<i class="fa-solid fa-arrow-right"></i></button>
+          <a class="cta cta--ghost" data-view="mywork">回我的工作</a>
+        </div>
+      </section>
+
+      <!-- ---------- MY WORK ---------- -->
+      <section class="view" data-view-panel="mywork">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>我的工作</h1>
+          <p>你的所有工作紀錄。本薪工作屬底薪範圍、不產生額外點數；認領工作通過審核後可領取點數。</p>
+        </div>
+
+        <div class="segment" role="tablist">
+          <button class="seg is-active" data-seg="salary">本薪工作</button>
+          <button class="seg" data-seg="claimed">認領工作</button>
+        </div>
+
+        <!-- 本薪工作 -->
+        <div data-seg-panel="salary">
+          <div class="section">
+            <div class="section__head"><h2>未完成</h2><span class="hint">2 項</span></div>
+            <div class="work">
+              <div class="work__item">
+                <div class="work__top"><span class="pill pill--work"><i class="fa-solid fa-circle"></i>進行中</span><span class="work__title">每週社群貼文排程</span></div>
+                <p class="work__note" style="color:var(--ink-mute)">本週 5 篇，已完成 3 篇・9／12 前完成</p>
+                <div class="work__bottom"><span></span><button class="mini-cta" data-action="deliver" data-task="每週社群貼文排程">交件<i class="fa-solid fa-arrow-right"></i></button></div>
+              </div>
+              <div class="work__item">
+                <div class="work__top"><span class="pill pill--work"><i class="fa-solid fa-circle"></i>進行中</span><span class="work__title">部門月報數據彙整</span></div>
+                <p class="work__note" style="color:var(--ink-mute)">9／30 截止・等各組回填</p>
+                <div class="work__bottom"><span></span><button class="mini-cta" data-action="deliver" data-task="部門月報數據彙整">交件<i class="fa-solid fa-arrow-right"></i></button></div>
+              </div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section__head"><h2>已完成</h2><a class="section__more" data-view="history">查看歷史紀錄<i class="fa-solid fa-arrow-right"></i></a></div>
+            <div class="work">
+              <div class="work__item">
+                <div class="work__top"><span class="pill pill--done"><i class="fa-solid fa-circle"></i>已完成</span><span class="work__title">8 月官網內容盤點</span></div>
+                <p class="work__note" style="color:var(--ink-mute)">8／29 完成・準時</p>
+              </div>
+              <div class="work__item">
+                <div class="work__top"><span class="pill pill--done"><i class="fa-solid fa-circle"></i>已完成</span><span class="work__title">例行 SEO 健檢（8 月）</span></div>
+                <p class="work__note" style="color:var(--ink-mute)">8／26 完成・準時</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 認領工作 -->
+        <div data-seg-panel="claimed" hidden>
+          <div class="section">
+            <div class="section__head"><h2>未完成</h2><span class="hint">3 項</span></div>
+            <div class="work">
+              <div class="work__item is-fix">
+                <div class="work__top"><span class="pill pill--fix"><i class="fa-solid fa-circle"></i>需修改</span><span class="work__title">官網改版文案 v2</span></div>
+                <p class="work__note"><i class="fa-solid fa-rotate-left"></i>王主管退回：「第二段語氣需更貼近一般讀者，避免行話。」</p>
+                <div class="work__bottom"><a class="work__link" data-view="history">查看退回紀錄<i class="fa-solid fa-arrow-right"></i></a><button class="mini-cta" data-action="deliver" data-task="官網改版文案 v2">交件<i class="fa-solid fa-arrow-right"></i></button></div>
+              </div>
+              <div class="work__item">
+                <div class="work__top"><span class="pill pill--work"><i class="fa-solid fa-circle"></i>進行中</span><span class="work__title">九月電子報排版</span></div>
+                <p class="work__note" style="color:var(--ink-mute)">剩 2 天到期・尚未交件</p>
+                <div class="work__bottom"><span></span><button class="mini-cta" data-action="deliver" data-task="九月電子報排版">交件<i class="fa-solid fa-arrow-right"></i></button></div>
+              </div>
+              <div class="work__item">
+                <div class="work__top"><span class="pill pill--wait"><i class="fa-solid fa-circle"></i>待驗收</span><span class="work__title">競品功能對照表</span></div>
+                <p class="work__note" style="color:var(--ink-mute)">已交件 v1・審核中</p>
+              </div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section__head"><h2>已完成</h2><a class="section__more" data-view="history">查看歷史紀錄<i class="fa-solid fa-arrow-right"></i></a></div>
+            <div class="work">
+              <div class="work__item">
+                <div class="work__top"><span class="pill pill--done"><i class="fa-solid fa-circle"></i>已完成</span><span class="work__title">新春主視覺海報</span></div>
+                <p class="work__note" style="color:var(--ink-mute)">9／2 通過驗收・+7 點已入帳</p>
+              </div>
+              <div class="work__item">
+                <div class="work__top"><span class="pill pill--done"><i class="fa-solid fa-circle"></i>已完成</span><span class="work__title">電商促購文案</span></div>
+                <p class="work__note" style="color:var(--ink-mute)">8／28 通過驗收・+5 點已入帳</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- HISTORY（歷史紀錄） ---------- -->
+      <section class="view" data-view-panel="history">
+        <div class="page-head">
+          <a class="back" data-view="mywork"><i class="fa-solid fa-arrow-left"></i>回我的工作</a>
+          <h1>歷史紀錄</h1>
+          <p>所有已結算的工作與點數。本薪工作僅記錄完成情形，不產生點數。</p>
+        </div>
+        <div class="chips" data-filter-list=".tablewrap tbody">
+          <button class="chip is-active" data-filter="*">全部</button>
+          <button class="chip" data-filter="本薪工作">本薪工作</button>
+          <button class="chip" data-filter="認領工作">認領工作</button>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>工作</th><th>類型</th><th>完成日</th><th>結果</th><th>點數</th></tr></thead>
+            <tbody>
+              <tr data-tags="認領工作"><td>新春主視覺海報</td><td>認領工作</td><td class="t-num">09／02</td><td>通過</td><td class="t-num">+7</td></tr>
+              <tr data-tags="本薪工作"><td>8 月官網內容盤點</td><td>本薪工作</td><td class="t-num">08／29</td><td>準時完成</td><td class="t-num">—</td></tr>
+              <tr data-tags="認領工作"><td>電商促購文案</td><td>認領工作</td><td class="t-num">08／28</td><td>通過</td><td class="t-num">+5</td></tr>
+              <tr data-tags="本薪工作"><td>例行 SEO 健檢（8 月）</td><td>本薪工作</td><td class="t-num">08／26</td><td>準時完成</td><td class="t-num">—</td></tr>
+              <tr data-tags="認領工作"><td>導入案例整理</td><td>認領工作</td><td class="t-num">08／21</td><td>通過</td><td class="t-num">+9</td></tr>
+              <tr data-tags="本薪工作"><td>7 月社群成效檢討</td><td>本薪工作</td><td class="t-num">08／05</td><td>準時完成</td><td class="t-num">—</td></tr>
+              <tr data-tags="認領工作"><td>年中報告視覺設計</td><td>認領工作</td><td class="t-num">07／30</td><td>通過</td><td class="t-num">+8</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ---------- POINTS ---------- -->
+      <section class="view" data-view-panel="points">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>我的點數</h1>
+          <p>每一筆獎金都能追溯到任務、點數、點值與部門達成率係數。待驗收、退回與爭議中的點數不列入獎金。</p>
+        </div>
+        <dl class="stat-row">
+          <div class="stat"><dt>有效點數</dt><dd class="num" id="effPoints">46</dd></div>
+          <div class="stat"><dt>待驗收</dt><dd class="num">12</dd></div>
+          <div class="stat"><dt>歷史累計</dt><dd class="num">318</dd></div>
+        </dl>
+
+        <div class="section" style="margin-top:32px;">
+          <div class="section__head"><h2>本月預計獎金怎麼算</h2></div>
+          <div class="card formula">
+            <div class="formula__cell"><b class="num">46</b><small>有效點數</small></div>
+            <span class="formula__op">×</span>
+            <div class="formula__cell"><b class="num">NT$200</b><small>點值</small></div>
+            <span class="formula__op">×</span>
+            <div class="formula__cell"><b class="num">1.05</b><small>部門達成率係數</small></div>
+            <div class="formula__eq"><span>本月預計獎金</span><b class="num">NT$9,660</b></div>
+          </div>
+        </div>
+
+        <div class="section" style="margin-top:32px;">
+          <div class="section__head"><h2>近一年薪水趨勢</h2><span class="hint">薪資＝本薪＋獎金</span></div>
+          <div class="card chart">
+            <svg viewBox="0 0 520 190" role="img" aria-label="2025 年 10 月至 2026 年 9 月的每月薪資、本薪與獎金。薪資為本薪與獎金之和，約在 39,000 至 48,000 元之間；本薪 36,000 元、7 月起 38,000 元；獎金在 3,200 至 9,800 元之間浮動，獎金越高當月薪資越高。">
+              <line x1="56" y1="22" x2="500" y2="22" stroke="var(--line)" stroke-width="1"/>
+              <line x1="56" y1="48.8" x2="500" y2="48.8" stroke="var(--line)" stroke-width="1"/>
+              <line x1="56" y1="75.6" x2="500" y2="75.6" stroke="var(--line)" stroke-width="1"/>
+              <line x1="56" y1="102.4" x2="500" y2="102.4" stroke="var(--line)" stroke-width="1"/>
+              <line x1="56" y1="129.2" x2="500" y2="129.2" stroke="var(--line)" stroke-width="1"/>
+              <line x1="56" y1="156" x2="500" y2="156" stroke="var(--line-strong)" stroke-width="1"/>
+              <text x="50" y="25.5" text-anchor="end" font-size="10" fill="var(--ink-mute)">5萬</text>
+              <text x="50" y="52.3" text-anchor="end" font-size="10" fill="var(--ink-mute)">4萬</text>
+              <text x="50" y="79.1" text-anchor="end" font-size="10" fill="var(--ink-mute)">3萬</text>
+              <text x="50" y="105.9" text-anchor="end" font-size="10" fill="var(--ink-mute)">2萬</text>
+              <text x="50" y="132.7" text-anchor="end" font-size="10" fill="var(--ink-mute)">1萬</text>
+              <text x="50" y="159.5" text-anchor="end" font-size="10" fill="var(--ink-mute)">0</text>
+
+              <path d="M56 59.5 L96.4 59.5 L136.7 59.5 L177.1 59.5 L217.5 59.5 L257.8 59.5 L298.2 59.5 L338.5 59.5 L378.9 59.5 L419.3 54.2 L459.6 54.2 L500 54.2"
+                    stroke="var(--ink-mute)" stroke-width="2" fill="none" stroke-linejoin="round"/>
+
+              <path d="M56 142.1 L96.4 144.2 L136.7 129.7 L177.1 145.8 L217.5 147.4 L257.8 138.3 L298.2 140.5 L338.5 136.2 L378.9 143.7 L419.3 132.4 L459.6 141 L500 130.1"
+                    stroke="var(--brand)" stroke-width="1.75" fill="none" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <path d="M56 45.6 L96.4 47.7 L136.7 33.3 L177.1 49.3 L217.5 50.9 L257.8 41.8 L298.2 44 L338.5 39.7 L378.9 47.2 L419.3 30.6 L459.6 39.2 L500 28.3"
+                    stroke="var(--brand)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="500" cy="28.3" r="4.5" fill="var(--brand)" stroke="var(--surface)" stroke-width="2"/>
+
+              <text x="56" y="176" text-anchor="start" font-size="10" fill="var(--ink-mute)">25／10</text>
+              <text x="177.1" y="176" text-anchor="middle" font-size="10" fill="var(--ink-mute)">26／01</text>
+              <text x="298.2" y="176" text-anchor="middle" font-size="10" fill="var(--ink-mute)">26／04</text>
+              <text x="419.3" y="176" text-anchor="middle" font-size="10" fill="var(--ink-mute)">26／07</text>
+              <text x="500" y="176" text-anchor="end" font-size="10" fill="var(--ink-mute)">26／09</text>
+            </svg>
+            <div class="chart__legend">
+              <span class="k-actual"><i></i>薪資</span>
+              <span class="k-actual"><i style="border-top-style:dashed"></i>獎金</span>
+              <span class="k-target"><i></i>本薪</span>
+            </div>
+            <div class="chart__co"><b class="num">NT$47,660</b><small>9 月薪資（本薪 38,000 ＋ 獎金 9,660）</small></div>
+            <p class="chart__say">薪資＝本薪＋獎金。本薪固定、7 月起由 36,000 調整為 38,000；獎金隨每月通過驗收的點數與部門達成率浮動，獎金越高，當月薪資越高。</p>
+          </div>
+        </div>
+
+        <div class="section" style="margin-top:32px;">
+          <div class="section__head"><h2>點數明細</h2><span class="hint">2026 年 9 月</span></div>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>任務</th><th>類型</th><th>完成時間</th><th>驗收結果</th><th>點數</th></tr></thead>
+              <tbody>
+                <tr><td>新春主視覺海報</td><td>選擇任務</td><td class="t-num">09／02</td><td>通過</td><td class="t-num">+7</td></tr>
+                <tr><td>電商促購文案</td><td>選擇任務</td><td class="t-num">08／28</td><td>通過</td><td class="t-num">+5</td></tr>
+                <tr><td>導入案例整理</td><td>選擇任務</td><td class="t-num">08／21</td><td>通過</td><td class="t-num">+9</td></tr>
+                <tr><td>官網改版文案 v2</td><td>選擇任務</td><td class="t-num">—</td><td>需修改</td><td class="t-num">保留</td></tr>
+                <tr><td>產品發表會報名頁</td><td>選擇任務</td><td class="t-num">—</td><td>待驗收</td><td class="t-num">12</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- METRIC ---------- -->
+      <section class="view" data-view-panel="metric">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>部門達成率</h1>
+          <p>內容行銷部・以部門專案營收與毛利達成為依據。系統記錄目標值、實際值、計算期間與資料來源。</p>
+        </div>
+        <div class="card chart" style="max-width:640px;">
+          <svg viewBox="0 0 340 180" role="img" aria-label="部門達成率折線圖">
+            <line x1="44" y1="30" x2="320" y2="30" stroke="var(--line)" stroke-width="1"/>
+            <line x1="44" y1="70" x2="320" y2="70" stroke="var(--line)" stroke-width="1"/>
+            <line x1="44" y1="110" x2="320" y2="110" stroke="var(--line)" stroke-width="1"/>
+            <text x="36" y="34" text-anchor="end" font-size="10" fill="var(--ink-mute)">110</text>
+            <text x="36" y="74" text-anchor="end" font-size="10" fill="var(--ink-mute)">100</text>
+            <text x="36" y="114" text-anchor="end" font-size="10" fill="var(--ink-mute)">90</text>
+            <path d="M44 70 L320 70" stroke="var(--ink-mute)" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+            <path d="M44 102 L182 86 L320 50 L320 140 L44 140 Z" fill="var(--brand)" fill-opacity="0.10"/>
+            <path d="M44 102 L182 86 L320 50" stroke="var(--brand)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="44" cy="102" r="3.5" fill="var(--brand)"/>
+            <circle cx="182" cy="86" r="3.5" fill="var(--brand)"/>
+            <circle cx="320" cy="50" r="4.5" fill="var(--brand)" stroke="var(--surface)" stroke-width="2"/>
+            <text x="44" y="165" text-anchor="middle" font-size="11" fill="var(--ink-mute)">6 月</text>
+            <text x="182" y="165" text-anchor="middle" font-size="11" fill="var(--ink-mute)">7 月</text>
+            <text x="320" y="165" text-anchor="middle" font-size="11" fill="var(--ink-mute)">8 月</text>
+          </svg>
+          <div class="chart__legend">
+            <span class="k-actual"><i></i>實際達成率</span>
+            <span class="k-target"><i style="border-top-style:dashed"></i>目標 100%</span>
+          </div>
+        </div>
+        <div class="tablewrap" style="margin-top:24px;">
+          <table>
+            <thead><tr><th>月份</th><th>目標營收</th><th>實際營收</th><th>達成率</th><th>係數</th></tr></thead>
+            <tbody>
+              <tr><td>2026／06</td><td class="t-num">NT$1,200,000</td><td class="t-num">NT$1,104,000</td><td class="t-num">92%</td><td class="t-num">0.95</td></tr>
+              <tr><td>2026／07</td><td class="t-num">NT$1,200,000</td><td class="t-num">NT$1,152,000</td><td class="t-num">96%</td><td class="t-num">0.98</td></tr>
+              <tr><td>2026／08</td><td class="t-num">NT$1,250,000</td><td class="t-num">NT$1,312,500</td><td class="t-num">105%</td><td class="t-num">1.05</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="chart__say" style="margin-top:16px;">資料來源：財務系統月結報表。係數於每月結算後更新，並套用至當月獎金核算。</p>
+      </section>
+
+      <!-- ---------- NOTIFICATIONS ---------- -->
+      <section class="view" data-view-panel="notifications">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>通知中心</h1>
+          <p>任務認領、截止提醒、退回、驗收結果與月度結算都會通知你。</p>
+        </div>
+        <div class="chips" data-filter-list=".notis">
+          <button class="chip is-active" data-filter="*">全部（6）</button>
+          <button class="chip" data-filter="驗收結果">驗收結果（3）</button>
+          <button class="chip" data-filter="退回修改">退回修改（1）</button>
+          <button class="chip" data-filter="新任務">新任務（1）</button>
+          <button class="chip" data-filter="截止提醒">截止提醒（1）</button>
+        </div>
+        <div class="card card--pad notis">
+          <div class="noti" data-tags="驗收結果">
+            <div class="noti__ic noti__ic--ok"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="noti__body"><p>「新春主視覺海報」已通過驗收，<b>+7 點</b>已入帳。</p><time>2 小時前</time></div>
+          </div>
+          <div class="noti" data-tags="退回修改">
+            <div class="noti__ic noti__ic--fix"><i class="fa-solid fa-rotate-left"></i></div>
+            <div class="noti__body"><p>「官網改版文案 v2」被退回，請查看修改要求。</p><time>5 小時前</time></div>
+          </div>
+          <div class="noti" data-tags="驗收結果">
+            <div class="noti__ic noti__ic--ok"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="noti__body"><p>「使用者訪談逐字稿整理」審核通過，可在工作台領取 <b>5 點</b>。</p><time>1 天前</time></div>
+          </div>
+          <div class="noti" data-tags="新任務">
+            <div class="noti__ic noti__ic--new"><i class="fa-solid fa-plus"></i></div>
+            <div class="noti__body"><p>3 個符合你「技術寫作」技能的任務已開放認領。</p><time>1 天前</time></div>
+          </div>
+          <div class="noti" data-tags="截止提醒">
+            <div class="noti__ic noti__ic--fix"><i class="fa-solid fa-clock"></i></div>
+            <div class="noti__body"><p>「九月電子報排版」將於 2 天後到期。</p><time>2 天前</time></div>
+          </div>
+          <div class="noti" data-tags="驗收結果">
+            <div class="noti__ic noti__ic--ok"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="noti__body"><p>「導入案例整理」已通過驗收，<b>+9 點</b>已入帳。</p><time>3 天前</time></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- SKILLS ---------- -->
+      <section class="view" data-view-panel="skills">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>我的技能</h1>
+          <p>已驗證的技能決定你能認領哪些任務。補齊缺口可解鎖更多選擇任務。</p>
+        </div>
+        <div class="section__head"><h2>已驗證技能</h2></div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>技能</th><th>等級</th><th>最近使用</th><th>驗證人</th></tr></thead>
+            <tbody>
+              <tr><td>技術寫作</td><td>Lv2</td><td class="t-num">3 天前</td><td>王主管</td></tr>
+              <tr><td>市場研究</td><td>Lv2</td><td class="t-num">2 週前</td><td>王主管</td></tr>
+              <tr><td>訪談記錄</td><td>Lv1</td><td class="t-num">1 個月前</td><td>林研究員</td></tr>
+              <tr><td>視覺設計</td><td>Lv1</td><td class="t-num">1 週前</td><td>陳設計總監</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="section">
+          <div class="section__head"><h2>建議補齊的技能</h2></div>
+          <div class="gap">
+            <div class="gap__item">
+              <p>通過 <b>SQL 查詢 Lv2</b> 後，可多接 <b class="num">4</b> 個資料分析類任務。</p>
+              <a data-action="apply">申請技能驗證<i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="gap__item">
+              <p>通過 <b>英文簡報 Lv1</b> 後，可多接 <b class="num">2</b> 個跨國專案任務。</p>
+              <a data-action="apply">申請技能驗證<i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <button class="cta" data-action="apply">申請新技能<i class="fa-solid fa-plus"></i></button>
+        </div>
+      </section>
+
+      <!-- ---------- SETTINGS ---------- -->
+      <section class="view" data-view-panel="settings">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>設定</h1>
+          <p>個人資料、可工作時段與通知偏好。</p>
+        </div>
+        <div class="placeholder"><i class="fa-solid fa-gear"></i>此區塊在 MVP 規劃中，POC 尚未展開。</div>
+      </section>
+
+      <!-- ---------- HELP ---------- -->
+      <section class="view" data-view-panel="help">
+        <div class="page-head">
+          <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
+          <h1>說明與規則</h1>
+          <p>點數規則、任務狀態機與獎金核算方式。</p>
+        </div>
+        <div class="placeholder"><i class="fa-solid fa-circle-question"></i>此區塊在 MVP 規劃中，POC 尚未展開。</div>
+      </section>
+
+    </main>
+
+    <!-- Bottom tab (mobile) -->
+    <nav class="tabbar" aria-label="主要導覽">
+      <a class="tab" data-view="home"><i class="fa-solid fa-house"></i>首頁</a>
+      <a class="tab" data-view="browse"><i class="fa-solid fa-list-check"></i>認領</a>
+      <a class="tab" data-view="mywork"><i class="fa-solid fa-folder-open"></i>我的工作</a>
+      <a class="tab" data-view="points"><i class="fa-solid fa-coins"></i>點數</a>
+      <a class="tab" data-view="skills"><i class="fa-solid fa-graduation-cap"></i>技能</a>
+    </nav>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  try{var saved=localStorage.getItem('dp-theme'); if(saved){root.setAttribute('data-theme',saved);}}catch(e){}
+
+  var SUF='・饌保堡工作任務系統';
+  var titles={
+    login:'饌保堡工作任務系統', home:'首頁'+SUF, browse:'認領任務'+SUF, taskdetail:'任務詳情'+SUF,
+    workbench:'工作台'+SUF, deliver:'交件'+SUF, submitted:'交件完成'+SUF, mywork:'我的工作'+SUF, history:'歷史紀錄'+SUF,
+    points:'我的點數'+SUF, metric:'部門達成率'+SUF, notifications:'通知中心'+SUF, skills:'我的技能'+SUF,
+    settings:'設定'+SUF, help:'說明與規則'+SUF
+  };
+  var shellViews={home:1,browse:1,taskdetail:1,workbench:1,deliver:1,submitted:1,mywork:1,history:1,points:1,metric:1,notifications:1,skills:1,settings:1,help:1};
+
+  var wbSeq=0, pendingDeliver=null, pendingTask='工作';
+  var wbCount=document.querySelectorAll('#wbList .wb__item').length;
+
+  function updateWbBadge(){
+    var b=document.getElementById('wbBtn');
+    if(b) b.setAttribute('data-count', String(wbCount));
+    var navc=document.getElementById('wbNavCount');
+    if(navc) navc.textContent=wbCount?('（'+wbCount+'）'):'';
+  }
+  function refreshWbEmpty(){
+    var list=document.getElementById('wbList'), empty=document.getElementById('wbEmpty');
+    var has=!!(list && list.querySelector('.wb__item'));
+    if(empty) empty.hidden=has;
+    if(list) list.hidden=!has;
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function addToWorkbench(title, points, skill){
+    var list=document.getElementById('wbList');
+    if(!list) return;
+    var id='wb-'+(++wbSeq);
+    var el=document.createElement('div');
+    el.className='wb__item';
+    el.setAttribute('data-state','progress');
+    el.setAttribute('data-id',id);
+    el.innerHTML=
+      '<div class="wb__main">'+
+        '<div class="wb__title">'+esc(title)+'</div>'+
+        '<div class="task__meta">'+(skill?'<span class="badge">'+esc(skill)+'</span>':'')+
+          '<span class="badge badge--points"><i class="fa-solid fa-plus"></i>'+esc(points)+' 點</span></div>'+
+      '</div>'+
+      '<div class="wb__status"><span class="pill pill--work"><i class="fa-solid fa-circle"></i>進行中</span></div>'+
+      '<div class="wb__action"><span class="note">尚未交件</span>'+
+        '<button class="mini-cta" data-action="deliver" data-id="'+id+'" data-points="'+esc(points)+'">交件<i class="fa-solid fa-arrow-right"></i></button>'+
+      '</div>';
+    list.insertBefore(el, list.firstChild);
+    wbCount++; updateWbBadge(); refreshWbEmpty();
+  }
+
+  var panels=[].slice.call(document.querySelectorAll('[data-view-panel]'));
+  var sidebar=document.getElementById('sidebar');
+  var scrim=document.getElementById('scrim');
+
+  function closeDrawer(){ sidebar.classList.remove('is-open'); scrim.classList.remove('is-open'); }
+
+  function applyFilter(chips, chip){
+    var sel=chips.getAttribute('data-filter-list');
+    if(!sel) return;
+    chips.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('is-active', c===chip); });
+    var f=(chip && chip.getAttribute('data-filter')) || '*';
+    var list=chips.parentElement.querySelector(sel);
+    if(!list) return;
+    [].forEach.call(list.children, function(item){
+      var tags=(item.getAttribute('data-tags')||'').split(',').map(function(s){return s.trim();});
+      item.hidden = !(f==='*' || tags.indexOf(f)!==-1);
+    });
+  }
+
+  function resetFilters(panel){
+    if(!panel) return;
+    panel.querySelectorAll('.chips[data-filter-list]').forEach(function(chips){
+      applyFilter(chips, chips.querySelector('.chip'));
+    });
+  }
+
+  function show(id){
+    if(!titles[id]) id='home';
+    var inShell=!!shellViews[id];
+    panels.forEach(function(p){
+      var v=p.dataset.viewPanel;
+      if(v==='login') p.hidden = inShell;
+      else if(v==='shell') p.hidden = !inShell;
+      else p.hidden = (v!==id);
+    });
+    document.querySelectorAll('[data-view]').forEach(function(l){
+      l.classList.toggle('is-active', l.dataset.view===id);
+    });
+    document.title=titles[id];
+    if(location.hash!=='#'+id){ try{history.replaceState(null,'','#'+id);}catch(e){} }
+    var curPanel=document.querySelector('[data-view-panel="'+id+'"]');
+    resetFilters(curPanel);
+    if(curPanel){
+      curPanel.querySelectorAll('.segment').forEach(function(sg){
+        var segs=sg.querySelectorAll('.seg'); if(!segs.length) return;
+        segs.forEach(function(s,i){ s.classList.toggle('is-active', i===0); });
+        var first=segs[0].getAttribute('data-seg');
+        sg.parentElement.querySelectorAll('[data-seg-panel]').forEach(function(p){
+          p.hidden = p.getAttribute('data-seg-panel')!==first;
+        });
+      });
+    }
+    closeDrawer();
+    window.scrollTo(0,0);
+  }
+
+  document.addEventListener('click',function(e){
+    var act=e.target.closest('[data-action]');
+    if(act){
+      e.preventDefault();
+      var a=act.dataset.action;
+      if(a==='theme'){
+        var cur=root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+        var next=cur==='dark'?'light':'dark';
+        root.setAttribute('data-theme',next);
+        try{localStorage.setItem('dp-theme',next);}catch(e){}
+      } else if(a==='drawer'){
+        var open=!sidebar.classList.contains('is-open');
+        sidebar.classList.toggle('is-open',open);
+        scrim.classList.toggle('is-open',open);
+      } else if(a==='claim'){
+        var card=act.closest('.task'), title, points='0', skill='';
+        if(card){
+          title=card.querySelector('.task__title').textContent.trim();
+          var pb=card.querySelector('.badge--points'); points=pb?pb.textContent.replace(/[^0-9]/g,''):'0';
+          var sb=card.querySelector('.badge:not(.badge--points)'); skill=sb?sb.textContent.trim():'';
+        } else {
+          title=document.querySelector('[data-view-panel="taskdetail"] h1').textContent.trim();
+          points='8'; skill='技術寫作 Lv2';
+        }
+        addToWorkbench(title, points, skill);
+        act.disabled=true;
+        act.textContent='已加入工作台';
+        if(act.classList.contains('cta')){ setTimeout(function(){ show('workbench'); }, 550); }
+      } else if(a==='deliver'){
+        pendingDeliver=act.getAttribute('data-id')||null;
+        var it=pendingDeliver?document.querySelector('#wbList .wb__item[data-id="'+pendingDeliver+'"]'):null;
+        pendingTask=act.getAttribute('data-task') || (it?it.querySelector('.wb__title').textContent:'工作');
+        var dt=document.getElementById('deliverTitle');
+        if(dt) dt.textContent='交件：'+pendingTask;
+        var fc=document.getElementById('fileChip'); if(fc) fc.hidden=true;
+        var dn=document.getElementById('deliverNote'); if(dn) dn.value='';
+        var ds=document.querySelector('[data-view-panel="deliver"] [data-action="dosubmit"]');
+        if(ds) ds.innerHTML='送出交件<i class="fa-solid fa-arrow-right"></i>';
+        show('deliver');
+      } else if(a==='pickfile'){
+        var fc2=document.getElementById('fileChip'); if(fc2) fc2.hidden=false;
+      } else if(a==='rmfile'){
+        var fc3=document.getElementById('fileChip'); if(fc3) fc3.hidden=true;
+      } else if(a==='dosubmit'){
+        var item=pendingDeliver?document.querySelector('#wbList .wb__item[data-id="'+pendingDeliver+'"]'):null;
+        if(item){
+          var pts=(item.querySelector('.badge--points')||{textContent:'0'}).textContent.replace(/[^0-9]/g,'')||'0';
+          item.setAttribute('data-state','review');
+          item.querySelector('.wb__status').innerHTML='<span class="pill pill--wait"><i class="fa-solid fa-circle"></i>審核中</span>';
+          item.querySelector('.wb__action').innerHTML='<span class="note">已交件・等待審核</span>'+
+            '<a class="simlink" data-action="simpass" data-id="'+item.getAttribute('data-id')+'" data-points="'+pts+'">（示範）模擬審核通過</a>';
+        }
+        var st=document.getElementById('submittedTask');
+        if(st) st.textContent=pendingTask;
+        act.textContent='已送出交件';
+        setTimeout(function(){ show('submitted'); }, 400);
+      } else if(a==='simpass'){
+        var id2=act.getAttribute('data-id'), pts2=act.getAttribute('data-points')||'0';
+        var it2=document.querySelector('#wbList .wb__item[data-id="'+id2+'"]');
+        if(it2){
+          it2.setAttribute('data-state','claimable');
+          it2.querySelector('.wb__status').innerHTML='<span class="pill pill--claim"><i class="fa-solid fa-circle"></i>可領點數</span>';
+          it2.querySelector('.wb__action').innerHTML='<span class="note">審核通過</span>'+
+            '<button class="mini-cta" data-action="claimpoints" data-id="'+id2+'" data-points="'+pts2+'">領取 '+pts2+' 點<i class="fa-solid fa-coins"></i></button>';
+        }
+      } else if(a==='claimpoints'){
+        var id3=act.getAttribute('data-id'), n=parseInt(act.getAttribute('data-points')||'0',10)||0;
+        var it3=document.querySelector('#wbList .wb__item[data-id="'+id3+'"]');
+        if(it3){
+          it3.setAttribute('data-state','done');
+          it3.style.transition='opacity .35s ease'; it3.style.opacity='0.55';
+          it3.querySelector('.wb__status').innerHTML='<span class="pill pill--done"><i class="fa-solid fa-circle"></i>已領取</span>';
+          it3.querySelector('.wb__action').innerHTML='<span class="note">+'+n+' 點已計入有效點數</span>';
+          setTimeout(function(){ it3.remove(); wbCount=Math.max(0,wbCount-1); updateWbBadge(); refreshWbEmpty(); }, 1400);
+        }
+        var eff=document.getElementById('effPoints');
+        if(eff){ eff.textContent=String((parseInt(eff.textContent,10)||0)+n); }
+      } else if(a==='apply'){
+        act.innerHTML='已送出申請，待驗證 <i class="fa-solid fa-check"></i>';
+      }
+      return;
+    }
+
+    var seg=e.target.closest('.seg');
+    if(seg){
+      var sgWrap=seg.closest('.segment');
+      sgWrap.querySelectorAll('.seg').forEach(function(s){ s.classList.toggle('is-active', s===seg); });
+      var key=seg.getAttribute('data-seg');
+      sgWrap.parentElement.querySelectorAll('[data-seg-panel]').forEach(function(p){
+        p.hidden = p.getAttribute('data-seg-panel')!==key;
+      });
+      return;
+    }
+
+    var nav=e.target.closest('[data-view]');
+    if(nav){ e.preventDefault(); show(nav.dataset.view); return; }
+
+    var chip=e.target.closest('.chip');
+    if(chip){
+      var chips=chip.closest('.chips');
+      if(chips && chips.getAttribute('data-filter-list')){
+        applyFilter(chips, chip);
+      } else {
+        chip.parentElement.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('is-active'); });
+        chip.classList.add('is-active');
+      }
+    }
+  });
+
+  document.getElementById('loginForm').addEventListener('submit',function(e){
+    e.preventDefault(); show('home');
+  });
+
+  window.addEventListener('hashchange',function(){
+    show(location.hash.slice(1) || 'home');
+  });
+
+  updateWbBadge();
+  refreshWbEmpty();
+
+  var start=location.hash.slice(1);
+  show(start && titles[start] ? start : 'login');
+})();
+</script>
+</body>
+</html>
