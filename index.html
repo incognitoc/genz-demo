@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>饌保堡工作任務系統</title>
+<title>饌保堡工作管理系統</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -810,12 +810,12 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
       <i class="fa-solid fa-sack-dollar"></i>
       <div class="brand__text">
         <span class="brand__name">饌保堡有限公司</span>
-        <span class="brand__sub">工作任務系統</span>
+        <span class="brand__sub">工作管理系統</span>
       </div>
     </div>
     <form class="login__card" id="loginForm">
       <h1>登入你的工作台</h1>
-      <p>用公司帳號登入，查看你的任務、點數與部門達成率。</p>
+      <p>用公司帳號登入，查看你的工作、點數與部門達成率。</p>
       <div class="field">
         <label for="acc">公司帳號</label>
         <input id="acc" type="text" value="yijun.chen" autocomplete="username">
@@ -838,7 +838,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <i class="fa-solid fa-sack-dollar"></i>
         <div class="brand__text">
           <span class="brand__name">饌保堡有限公司</span>
-          <span class="brand__sub">工作任務系統</span>
+          <span class="brand__sub">工作管理系統</span>
         </div>
       </div>
       <button class="iconbtn iconbtn--badge appbar__wb" id="wbBtn" data-count="2" data-view="workbench" aria-label="工作台"><i class="fa-solid fa-bag-shopping"></i></button>
@@ -856,13 +856,13 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <i class="fa-solid fa-sack-dollar"></i>
         <div class="brand__text">
           <span class="brand__name">饌保堡有限公司</span>
-          <span class="brand__sub">工作任務系統</span>
+          <span class="brand__sub">工作管理系統</span>
         </div>
       </div>
       <nav class="nav">
         <span class="nav__label">主要工作</span>
         <a class="nav__item" data-view="home"><i class="fa-solid fa-house"></i>首頁</a>
-        <a class="nav__item" data-view="browse"><i class="fa-solid fa-list-check"></i>認領任務</a>
+        <a class="nav__item" data-view="browse"><i class="fa-solid fa-list-check"></i>認領工作</a>
         <a class="nav__item" data-view="workbench"><i class="fa-solid fa-bag-shopping"></i>工作台</a>
         <a class="nav__item" data-view="mywork"><i class="fa-solid fa-folder-open"></i>我的工作</a>
         <a class="nav__item" data-view="points"><i class="fa-solid fa-coins"></i>我的點數</a>
@@ -910,7 +910,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             <!-- 待認領 -->
             <div class="section">
               <div class="section__head">
-                <h2>待認領工作</h2>
+                <h2>待認領的加值工作</h2>
                 <span class="hint">符合你技能的推薦</span>
               </div>
               <div class="tasklist">
@@ -957,7 +957,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
                   </div>
                 </div>
               </div>
-              <a class="cta" data-view="browse">瀏覽所有可認領任務<i class="fa-solid fa-arrow-right"></i></a>
+              <a class="cta" data-view="browse">瀏覽所有可認領工作<i class="fa-solid fa-arrow-right"></i></a>
             </div>
 
             <!-- 進行中 -->
@@ -1060,7 +1060,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
                 <div class="noti">
                   <div class="noti__ic noti__ic--new"><i class="fa-solid fa-plus"></i></div>
                   <div class="noti__body">
-                    <p>3 個符合你「技術寫作」技能的任務已開放認領。</p>
+                    <p>3 個符合你「技術寫作」技能的工作已開放認領。</p>
                     <time>1 天前</time>
                   </div>
                 </div>
@@ -1069,14 +1069,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 
             <!-- 技能缺口 -->
             <div class="section">
-              <div class="section__head"><h2>補這些技能可多接任務</h2></div>
+              <div class="section__head"><h2>補這些技能可多接工作</h2></div>
               <div class="gap">
                 <div class="gap__item">
-                  <p>通過 <b>SQL 查詢 Lv2</b> 後，可多接 <b class="num">4</b> 個資料分析類任務。</p>
+                  <p>通過 <b>SQL 查詢 Lv2</b> 後，可多接 <b class="num">4</b> 個資料分析類工作。</p>
                   <a data-view="skills">前往申請技能<i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="gap__item">
-                  <p>通過 <b>英文簡報 Lv1</b> 後，可多接 <b class="num">2</b> 個跨國專案任務。</p>
+                  <p>通過 <b>英文簡報 Lv1</b> 後，可多接 <b class="num">2</b> 個跨國專案工作。</p>
                   <a data-view="skills">前往申請技能<i class="fa-solid fa-arrow-right"></i></a>
                 </div>
               </div>
@@ -1089,8 +1089,8 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
       <section class="view" data-view-panel="browse">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
-          <h1>認領任務</h1>
-          <p>這裡只顯示符合你已驗證技能與目前負載的選擇任務。認領後會建立你的專屬席位，通過驗收才會產生有效點數。</p>
+          <h1>認領工作</h1>
+          <p>這裡只顯示符合你已驗證技能與目前負載的加值工作。認領後會建立你的專屬席位，通過驗收才會產生有效點數。</p>
         </div>
         <div class="chips" data-filter-list=".tasklist">
           <button class="chip is-active" data-filter="*">全部（7）</button>
@@ -1162,12 +1162,12 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
       <!-- ---------- TASK DETAIL ---------- -->
       <section class="view" data-view-panel="taskdetail">
         <div class="page-head">
-          <a class="back" data-view="browse"><i class="fa-solid fa-arrow-left"></i>回認領任務</a>
+          <a class="back" data-view="browse"><i class="fa-solid fa-arrow-left"></i>回認領工作</a>
           <h1>撰寫 API 整合說明文件</h1>
           <p>技術文件專案・開放認領中</p>
         </div>
         <dl class="metagrid">
-          <div><dt>任務類型</dt><dd>選擇任務（產生點數）</dd></div>
+          <div><dt>工作類型</dt><dd>加值工作（產生點數）</dd></div>
           <div><dt>點數</dt><dd>8 點</dd></div>
           <div><dt>技能需求</dt><dd>技術寫作 Lv2 以上</dd></div>
           <div><dt>預估工時</dt><dd>6 小時</dd></div>
@@ -1175,10 +1175,10 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           <div><dt>驗收者</dt><dd>王主管</dd></div>
         </dl>
         <p class="prose">為新版對外 API 撰寫整合說明，涵蓋認證流程、常見錯誤碼、三個語言的範例呼叫。需與工程團隊確認技術細節後產出。</p>
-        <p class="prose"><b>交付格式：</b>Markdown 文件 + 範例程式碼片段，遞交至任務頁面。每次遞交會建立新版本，不會覆蓋舊版。</p>
-        <button class="cta" data-action="claim">認領此任務<i class="fa-solid fa-arrow-right"></i></button>
+        <p class="prose"><b>交付格式：</b>Markdown 文件 + 範例程式碼片段，遞交至工作頁面。每次遞交會建立新版本，不會覆蓋舊版。</p>
+        <button class="cta" data-action="claim">認領此工作<i class="fa-solid fa-arrow-right"></i></button>
         <a class="cta cta--ghost" data-view="browse">返回列表</a>
-        <p class="login__hint" style="margin-top:16px;">認領後任務會加入你的「工作台」，其他人無法同時認領同一席位。</p>
+        <p class="login__hint" style="margin-top:16px;">認領後工作會加入你的「工作台」，其他人無法同時認領同一席位。</p>
       </section>
 
       <!-- ---------- WORKBENCH（工作台） ---------- -->
@@ -1217,8 +1217,8 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 
         <div class="wb__empty" id="wbEmpty" hidden>
           <i class="fa-solid fa-bag-shopping"></i>
-          工作台目前是空的。<br>去「認領任務」挑選符合你技能的工作。
-          <div style="margin-top:16px;"><a class="mini-cta" data-view="browse" style="margin:0;">前往認領任務</a></div>
+          工作台目前是空的。<br>去「認領工作」挑選符合你技能的工作。
+          <div style="margin-top:16px;"><a class="mini-cta" data-view="browse" style="margin:0;">前往認領工作</a></div>
         </div>
       </section>
 
@@ -1227,7 +1227,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="page-head">
           <a class="back" data-view="workbench"><i class="fa-solid fa-arrow-left"></i>回工作台</a>
           <h1 id="deliverTitle">交件</h1>
-          <p>上傳這次的成果。每次交件都會建立新版本，不會覆蓋舊版；送出後任務進入審核。</p>
+          <p>上傳這次的成果。每次交件都會建立新版本，不會覆蓋舊版；送出後工作進入審核。</p>
         </div>
 
         <div class="metagrid" style="grid-template-columns:1fr;">
@@ -1262,7 +1262,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="submitted">
           <div class="submitted__mark"><i class="fa-solid fa-check"></i></div>
           <h1>已送出交件</h1>
-          <p>「<span id="submittedTask">工作</span>」已送出，任務進入審核。</p>
+          <p>「<span id="submittedTask">工作</span>」已送出，工作進入審核。</p>
           <div class="submitted__steps">
             <div class="submitted__row"><span>審核者</span><b>王主管</b></div>
             <div class="submitted__row"><span>預計審核時間</span><b>2 個工作日內</b></div>
@@ -1278,12 +1278,12 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>我的工作</h1>
-          <p>你的所有工作紀錄。本薪工作屬底薪範圍、不產生額外點數；認領工作通過審核後可領取點數。</p>
+          <p>你的所有工作紀錄。本薪工作屬底薪範圍、不產生額外點數；加值工作通過審核後可領取點數。</p>
         </div>
 
         <div class="segment" role="tablist">
           <button class="seg is-active" data-seg="salary">本薪工作</button>
-          <button class="seg" data-seg="claimed">認領工作</button>
+          <button class="seg" data-seg="claimed">加值工作</button>
         </div>
 
         <!-- 本薪工作 -->
@@ -1318,7 +1318,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           </div>
         </div>
 
-        <!-- 認領工作 -->
+        <!-- 加值工作 -->
         <div data-seg-panel="claimed" hidden>
           <div class="section">
             <div class="section__head"><h2>未完成</h2><span class="hint">3 項</span></div>
@@ -1365,19 +1365,19 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="chips" data-filter-list=".tablewrap tbody">
           <button class="chip is-active" data-filter="*">全部</button>
           <button class="chip" data-filter="本薪工作">本薪工作</button>
-          <button class="chip" data-filter="認領工作">認領工作</button>
+          <button class="chip" data-filter="加值工作">加值工作</button>
         </div>
         <div class="tablewrap">
           <table>
             <thead><tr><th>工作</th><th>類型</th><th>完成日</th><th>結果</th><th>點數</th></tr></thead>
             <tbody>
-              <tr data-tags="認領工作"><td>新春主視覺海報</td><td>認領工作</td><td class="t-num">09／02</td><td>通過</td><td class="t-num">+7</td></tr>
+              <tr data-tags="加值工作"><td>新春主視覺海報</td><td>加值工作</td><td class="t-num">09／02</td><td>通過</td><td class="t-num">+7</td></tr>
               <tr data-tags="本薪工作"><td>8 月官網內容盤點</td><td>本薪工作</td><td class="t-num">08／29</td><td>準時完成</td><td class="t-num">—</td></tr>
-              <tr data-tags="認領工作"><td>電商促購文案</td><td>認領工作</td><td class="t-num">08／28</td><td>通過</td><td class="t-num">+5</td></tr>
+              <tr data-tags="加值工作"><td>電商促購文案</td><td>加值工作</td><td class="t-num">08／28</td><td>通過</td><td class="t-num">+5</td></tr>
               <tr data-tags="本薪工作"><td>例行 SEO 健檢（8 月）</td><td>本薪工作</td><td class="t-num">08／26</td><td>準時完成</td><td class="t-num">—</td></tr>
-              <tr data-tags="認領工作"><td>導入案例整理</td><td>認領工作</td><td class="t-num">08／21</td><td>通過</td><td class="t-num">+9</td></tr>
+              <tr data-tags="加值工作"><td>導入案例整理</td><td>加值工作</td><td class="t-num">08／21</td><td>通過</td><td class="t-num">+9</td></tr>
               <tr data-tags="本薪工作"><td>7 月社群成效檢討</td><td>本薪工作</td><td class="t-num">08／05</td><td>準時完成</td><td class="t-num">—</td></tr>
-              <tr data-tags="認領工作"><td>年中報告視覺設計</td><td>認領工作</td><td class="t-num">07／30</td><td>通過</td><td class="t-num">+8</td></tr>
+              <tr data-tags="加值工作"><td>年中報告視覺設計</td><td>加值工作</td><td class="t-num">07／30</td><td>通過</td><td class="t-num">+8</td></tr>
             </tbody>
           </table>
         </div>
@@ -1388,7 +1388,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>我的點數</h1>
-          <p>每一筆獎金都能追溯到任務、點數、點值與部門達成率係數。待驗收、退回與爭議中的點數不列入獎金。</p>
+          <p>每一筆獎金都能追溯到工作、點數、點值與部門達成率係數。待驗收、退回與爭議中的點數不列入獎金。</p>
         </div>
         <dl class="stat-row">
           <div class="stat"><dt>有效點數</dt><dd class="num" id="effPoints">46</dd></div>
@@ -1455,13 +1455,13 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           <div class="section__head"><h2>點數明細</h2><span class="hint">2026 年 9 月</span></div>
           <div class="tablewrap">
             <table>
-              <thead><tr><th>任務</th><th>類型</th><th>完成時間</th><th>驗收結果</th><th>點數</th></tr></thead>
+              <thead><tr><th>工作</th><th>類型</th><th>完成時間</th><th>驗收結果</th><th>點數</th></tr></thead>
               <tbody>
-                <tr><td>新春主視覺海報</td><td>選擇任務</td><td class="t-num">09／02</td><td>通過</td><td class="t-num">+7</td></tr>
-                <tr><td>電商促購文案</td><td>選擇任務</td><td class="t-num">08／28</td><td>通過</td><td class="t-num">+5</td></tr>
-                <tr><td>導入案例整理</td><td>選擇任務</td><td class="t-num">08／21</td><td>通過</td><td class="t-num">+9</td></tr>
-                <tr><td>官網改版文案 v2</td><td>選擇任務</td><td class="t-num">—</td><td>需修改</td><td class="t-num">保留</td></tr>
-                <tr><td>產品發表會報名頁</td><td>選擇任務</td><td class="t-num">—</td><td>待驗收</td><td class="t-num">12</td></tr>
+                <tr><td>新春主視覺海報</td><td>加值工作</td><td class="t-num">09／02</td><td>通過</td><td class="t-num">+7</td></tr>
+                <tr><td>電商促購文案</td><td>加值工作</td><td class="t-num">08／28</td><td>通過</td><td class="t-num">+5</td></tr>
+                <tr><td>導入案例整理</td><td>加值工作</td><td class="t-num">08／21</td><td>通過</td><td class="t-num">+9</td></tr>
+                <tr><td>官網改版文案 v2</td><td>加值工作</td><td class="t-num">—</td><td>需修改</td><td class="t-num">保留</td></tr>
+                <tr><td>產品發表會報名頁</td><td>加值工作</td><td class="t-num">—</td><td>待驗收</td><td class="t-num">12</td></tr>
               </tbody>
             </table>
           </div>
@@ -1516,13 +1516,13 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>通知中心</h1>
-          <p>任務認領、截止提醒、退回、驗收結果與月度結算都會通知你。</p>
+          <p>工作認領、截止提醒、退回、驗收結果與月度結算都會通知你。</p>
         </div>
         <div class="chips" data-filter-list=".notis">
           <button class="chip is-active" data-filter="*">全部（6）</button>
           <button class="chip" data-filter="驗收結果">驗收結果（3）</button>
           <button class="chip" data-filter="退回修改">退回修改（1）</button>
-          <button class="chip" data-filter="新任務">新任務（1）</button>
+          <button class="chip" data-filter="新工作">新工作（1）</button>
           <button class="chip" data-filter="截止提醒">截止提醒（1）</button>
         </div>
         <div class="card card--pad notis">
@@ -1538,9 +1538,9 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             <div class="noti__ic noti__ic--ok"><i class="fa-solid fa-circle-check"></i></div>
             <div class="noti__body"><p>「使用者訪談逐字稿整理」審核通過，可在工作台領取 <b>5 點</b>。</p><time>1 天前</time></div>
           </div>
-          <div class="noti" data-tags="新任務">
+          <div class="noti" data-tags="新工作">
             <div class="noti__ic noti__ic--new"><i class="fa-solid fa-plus"></i></div>
-            <div class="noti__body"><p>3 個符合你「技術寫作」技能的任務已開放認領。</p><time>1 天前</time></div>
+            <div class="noti__body"><p>3 個符合你「技術寫作」技能的工作已開放認領。</p><time>1 天前</time></div>
           </div>
           <div class="noti" data-tags="截止提醒">
             <div class="noti__ic noti__ic--fix"><i class="fa-solid fa-clock"></i></div>
@@ -1558,7 +1558,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>我的技能</h1>
-          <p>已驗證的技能決定你能認領哪些任務。補齊缺口可解鎖更多選擇任務。</p>
+          <p>已驗證的技能決定你能認領哪些工作。補齊缺口可解鎖更多加值工作。</p>
         </div>
         <div class="section__head"><h2>已驗證技能</h2><span class="hint">4 項</span></div>
         <div class="tablewrap">
@@ -1587,11 +1587,11 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           <div class="section__head"><h2>建議補齊的技能</h2></div>
           <div class="gap">
             <div class="gap__item">
-              <p>通過 <b>英文簡報 Lv1</b> 後，可多接 <b class="num">2</b> 個跨國專案任務。</p>
+              <p>通過 <b>英文簡報 Lv1</b> 後，可多接 <b class="num">2</b> 個跨國專案工作。</p>
               <a data-view="skillapply">申請技能驗證<i class="fa-solid fa-arrow-right"></i></a>
             </div>
             <div class="gap__item">
-              <p>將 <b>視覺設計</b> 升到 <b>Lv2</b>，可多接 <b class="num">3</b> 個品牌設計任務。</p>
+              <p>將 <b>視覺設計</b> 升到 <b>Lv2</b>，可多接 <b class="num">3</b> 個品牌設計工作。</p>
               <a data-view="skillapply">申請技能驗證<i class="fa-solid fa-arrow-right"></i></a>
             </div>
           </div>
@@ -1604,7 +1604,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="page-head">
           <a class="back" data-view="skills"><i class="fa-solid fa-arrow-left"></i>回我的技能</a>
           <h1>申請技能驗證</h1>
-          <p>填寫要申請的技能與佐證資料，送出後由指定驗證人審核。通過後即可認領對應任務。</p>
+          <p>填寫要申請的技能與佐證資料，送出後由指定驗證人審核。通過後即可認領對應工作。</p>
         </div>
 
         <div id="skillForm">
@@ -1666,7 +1666,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>設定</h1>
-          <p>個人資料、可工作時段、任務負載與通知偏好。</p>
+          <p>個人資料、可工作時段、工作負載與通知偏好。</p>
         </div>
 
         <div class="card-group">
@@ -1679,7 +1679,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         </div>
 
         <div class="card-group">
-          <div class="card-group__title">可工作時段<small style="font-weight:400;text-transform:none;letter-spacing:0;"> ・供主管指派任務時參考</small></div>
+          <div class="card-group__title">可工作時段<small style="font-weight:400;text-transform:none;letter-spacing:0;"> ・供主管指派工作時參考</small></div>
           <div class="set-row"><span class="set-row__label">週一</span><span class="notif-cell"><span class="set-row__val">09:00–18:00</span><button class="toggle" aria-pressed="true" aria-label="週一可工作"></button></span></div>
           <div class="set-row"><span class="set-row__label">週二</span><span class="notif-cell"><span class="set-row__val">09:00–18:00</span><button class="toggle" aria-pressed="true" aria-label="週二可工作"></button></span></div>
           <div class="set-row"><span class="set-row__label">週三</span><span class="notif-cell"><span class="set-row__val">09:00–18:00</span><button class="toggle" aria-pressed="true" aria-label="週三可工作"></button></span></div>
@@ -1689,8 +1689,8 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         </div>
 
         <div class="card-group">
-          <div class="card-group__title">任務負載上限</div>
-          <div class="set-row"><span class="set-row__label">同時進行的認領任務<small>超過上限時，新任務會顯示為不可認領</small></span>
+          <div class="card-group__title">工作負載上限</div>
+          <div class="set-row"><span class="set-row__label">同時進行的認領工作<small>超過上限時，新工作會顯示為不可認領</small></span>
             <span class="set-row__val"><select><option>2 件</option><option selected>3 件</option><option>4 件</option><option>5 件</option></select></span></div>
           <div class="set-row"><span class="set-row__label">每週額外工時上限</span>
             <span class="set-row__val"><select><option>8 小時</option><option selected>12 小時</option><option>16 小時</option><option>20 小時</option></select></span></div>
@@ -1699,7 +1699,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="card-group">
           <div class="card-group__title">通知偏好</div>
           <div class="notif-head"><span>站內</span><span>Email</span></div>
-          <div class="set-row"><span class="set-row__label">新任務可認領</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="false" aria-label="Email"></button></span></div>
+          <div class="set-row"><span class="set-row__label">新工作可認領</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="false" aria-label="Email"></button></span></div>
           <div class="set-row"><span class="set-row__label">截止前提醒</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="true" aria-label="Email"></button></span></div>
           <div class="set-row"><span class="set-row__label">逾期通知</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="true" aria-label="Email"></button></span></div>
           <div class="set-row"><span class="set-row__label">退回修改</span><span class="notif-cell"><button class="toggle" aria-pressed="true" aria-label="站內"></button><button class="toggle" aria-pressed="true" aria-label="Email"></button></span></div>
@@ -1732,7 +1732,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>說明與規則</h1>
-          <p>點數規則、獎金核算、任務狀態與常見問題。</p>
+          <p>點數規則、獎金核算、工作狀態與常見問題。</p>
         </div>
 
         <div class="section">
@@ -1740,7 +1740,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           <div class="rule">
             <h3>兩種工作類型</h3>
             <p><b>本薪工作</b>：底薪涵蓋的日常與必要工作，不產生額外點數，但會記錄完成率、準時率與品質。</p>
-            <p><b>認領工作</b>：自由認領、可產生額外點數的選擇任務。<b>只有通過主管驗收後</b>才會產生「有效點數」。</p>
+            <p><b>加值工作</b>：可自由認領、產生額外點數的工作。<b>只有通過主管驗收後</b>才會產生「有效點數」。</p>
           </div>
           <div class="rule">
             <h3>哪些點數不算獎金</h3>
@@ -1763,7 +1763,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         </div>
 
         <div class="section">
-          <div class="section__head"><h2>任務會經過哪些狀態</h2></div>
+          <div class="section__head"><h2>工作會經過哪些狀態</h2></div>
           <div class="rule">
             <h3>正常流程</h3>
             <div class="flow">
@@ -1781,7 +1781,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
               <span class="flow__node">重新開放</span>
               <span class="flow__node">已取消</span>
             </div>
-            <p style="margin-top:12px;">主管退回時必須填寫原因與修改要求；退回後原截止日不會自動延長。爭議任務會暫停點數與獎金結算，並指派複核人員。</p>
+            <p style="margin-top:12px;">主管退回時必須填寫原因與修改要求；退回後原截止日不會自動延長。爭議工作會暫停點數與獎金結算，並指派複核人員。</p>
           </div>
         </div>
 
@@ -1797,11 +1797,11 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           <div class="section__head"><h2>常見問題</h2></div>
           <details class="faq">
             <summary>認領後可以取消嗎？<i class="fa-solid fa-chevron-down"></i></summary>
-            <p>可以，但必須在遞交任何成果之前、依規則取消，並填寫取消原因。已有交件紀錄的任務不會被無痕刪除。</p>
+            <p>可以，但必須在遞交任何成果之前、依規則取消，並填寫取消原因。已有交件紀錄的工作不會被無痕刪除。</p>
           </details>
           <details class="faq">
-            <summary>為什麼有些任務我看不到？<i class="fa-solid fa-chevron-down"></i></summary>
-            <p>可能是你尚未達到該任務的必要技能等級或認證，或是你目前的進行中任務數／預估工時已達設定的負載上限。</p>
+            <summary>為什麼有些工作我看不到？<i class="fa-solid fa-chevron-down"></i></summary>
+            <p>可能是你尚未達到該工作的必要技能等級或認證，或是你目前的進行中工作數／預估工時已達設定的負載上限。</p>
           </details>
           <details class="faq">
             <summary>部門達成率下降，會扣我的點數嗎？<i class="fa-solid fa-chevron-down"></i></summary>
@@ -1832,9 +1832,9 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
   var root=document.documentElement;
   try{var saved=localStorage.getItem('dp-theme'); if(saved){root.setAttribute('data-theme',saved);}}catch(e){}
 
-  var SUF='・饌保堡工作任務系統';
+  var SUF='・饌保堡工作管理系統';
   var titles={
-    login:'饌保堡工作任務系統', home:'首頁'+SUF, browse:'認領任務'+SUF, taskdetail:'任務詳情'+SUF,
+    login:'饌保堡工作管理系統', home:'首頁'+SUF, browse:'認領工作'+SUF, taskdetail:'工作詳情'+SUF,
     workbench:'工作台'+SUF, deliver:'交件'+SUF, submitted:'交件完成'+SUF, mywork:'我的工作'+SUF, history:'歷史紀錄'+SUF,
     points:'我的點數'+SUF, metric:'部門達成率'+SUF, notifications:'通知中心'+SUF, skills:'我的技能'+SUF, skillapply:'申請技能驗證'+SUF,
     settings:'設定'+SUF, help:'說明與規則'+SUF
