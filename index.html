@@ -801,15 +801,16 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 }
 </style>
 <link rel="stylesheet" href="office.css">
+<link rel="stylesheet" href="rooms.css">
 </head>
 <body>
 <div class="office-world" aria-hidden="true"><div class="office-background" id="officeBackground"></div><div class="office-shade"></div></div>
 <div id="roomTravel" class="room-travel" aria-hidden="true"></div>
-<div class="office-location" aria-live="polite"><span class="location-dot"></span><span id="roomLocation">38F / 空中接待廳</span><span class="location-weather">晴時多雲 · CITY VIEW</span></div>
+<div class="office-location" aria-live="polite"><span class="location-dot"></span><span id="roomLocation">38F / 空中接待廳</span><span class="location-weather">SKY OFFICE · 38F</span></div>
 <div class="app" id="app">
 
   <!-- ===================== LOGIN ===================== -->
-  <section class="login view" data-view-panel="login">
+  <section class="login view" data-view-panel="login"><div class="login-arrival"><div class="room-eyebrow">38F <span></span> ARRIVAL LOBBY</div><h2>歡迎抵達。<br>讓今天，值得期待。</h2><p>饌保堡 · 空中辦公室</p></div>
     <div class="login__brand">
       <i class="fa-solid fa-sack-dollar"></i>
       <div class="brand__text">
@@ -880,6 +881,8 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
     <div class="scrim" id="scrim" data-action="drawer"></div>
 
     <!-- ===================== MAIN ===================== -->
+    <div class="room-directory-trigger"><button id="openDirectory" type="button"><i class="fa-solid fa-border-all"></i> 樓層導覽</button></div>
+    <dialog id="roomDirectory" class="room-directory" aria-labelledby="directoryTitle"><div class="directory-header"><div><div class="room-eyebrow">SKY OFFICE / 38F</div><h2 id="directoryTitle">選擇你的下一個房間</h2></div><button id="closeDirectory" class="iconbtn" aria-label="關閉樓層導覽">✕</button></div><div class="directory-grid"></div><p class="directory-note">專案簡報、交件與能力評鑑室，可從對應工作流程進入。</p></dialog>
     <main class="main" id="main">
 
       <!-- ---------- HOME ---------- -->
@@ -1102,6 +1105,9 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 
       <!-- ---------- BROWSE ---------- -->
       <section class="view" data-view-panel="browse">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> PROJECT EXCHANGE</div><h2>下一個機會，在這裡。</h2><p>找到適合你的專長，認領下一份挑戰。</p></header>
+        <div class="suite-nameplate"><span>03</span><div>派工中心<small>PROJECT EXCHANGE</small></div></div>
+        <div class="suite-surface suite-surface--dispatch">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>認領工作</h1>
@@ -1172,10 +1178,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             </div>
           </div>
         </div>
+              </div>
       </section>
 
       <!-- ---------- TASK DETAIL ---------- -->
       <section class="view" data-view-panel="taskdetail">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> BRIEFING ROOM</div><h2>先看清目標，再開始。</h2><p>確認需求、交付格式與驗收標準。</p></header>
+        <div class="suite-nameplate"><span>04</span><div>專案簡報室<small>BRIEFING ROOM</small></div></div>
+        <div class="suite-surface suite-surface--briefing">
         <div class="page-head">
           <a class="back" data-view="browse"><i class="fa-solid fa-arrow-left"></i>回認領工作</a>
           <h1>撰寫 API 整合說明文件</h1>
@@ -1194,6 +1204,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         <button class="cta" data-action="claim">認領此工作<i class="fa-solid fa-arrow-right"></i></button>
         <a class="cta cta--ghost" data-view="browse">返回列表</a>
         <p class="login__hint" style="margin-top:16px;">認領後工作會加入你的「工作台」，其他人無法同時認領同一席位。</p>
+              </div>
       </section>
 
       <!-- ---------- WORKBENCH（工作台） ---------- -->
@@ -1243,6 +1254,9 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 
       <!-- ---------- DELIVER（交件） ---------- -->
       <section class="view" data-view-panel="deliver">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> REVIEW STUDIO</div><h2>讓成果，準備好被看見。</h2><p>整理交付內容，記錄每一次改進。</p></header>
+        <div class="suite-nameplate"><span>05</span><div>成果審閱室<small>REVIEW STUDIO</small></div></div>
+        <div class="suite-surface suite-surface--review">
         <div class="page-head">
           <a class="back" data-view="workbench"><i class="fa-solid fa-arrow-left"></i>回工作台</a>
           <h1 id="deliverTitle">交件</h1>
@@ -1274,10 +1288,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 
         <button class="cta" data-action="dosubmit">送出交件<i class="fa-solid fa-arrow-right"></i></button>
         <a class="cta cta--ghost" data-view="workbench">取消</a>
+              </div>
       </section>
 
       <!-- ---------- SUBMITTED（交件完成） ---------- -->
       <section class="view" data-view-panel="submitted">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> REFLECTION LOUNGE</div><h2>告一段落，稍作停留。</h2><p>成果已送出，接下來交給審核流程。</p></header>
+        <div class="suite-nameplate"><span>06</span><div>休憩交誼廳<small>REFLECTION LOUNGE</small></div></div>
+        <div class="suite-surface suite-surface--reflection">
         <div class="submitted">
           <div class="submitted__mark"><i class="fa-solid fa-check"></i></div>
           <h1>已送出交件</h1>
@@ -1290,10 +1308,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           <button class="cta" data-view="workbench">回工作台<i class="fa-solid fa-arrow-right"></i></button>
           <a class="cta cta--ghost" data-view="mywork">回我的工作</a>
         </div>
+              </div>
       </section>
 
       <!-- ---------- MY WORK ---------- -->
       <section class="view" data-view-panel="mywork">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> OPERATIONS SUITE</div><h2>把每一件事，安排妥當。</h2><p>集中掌握本薪工作與加值工作的進度。</p></header>
+        <div class="suite-nameplate"><span>07</span><div>個人營運室<small>OPERATIONS SUITE</small></div></div>
+        <div class="suite-surface suite-surface--operations">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>我的工作</h1>
@@ -1372,10 +1394,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             </div>
           </div>
         </div>
+              </div>
       </section>
 
       <!-- ---------- HISTORY（歷史紀錄） ---------- -->
       <section class="view" data-view-panel="history">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> THE ARCHIVE</div><h2>每一步，都有跡可循。</h2><p>回看已完成的工作與每一筆結算紀錄。</p></header>
+        <div class="suite-nameplate"><span>08</span><div>典藏檔案室<small>THE ARCHIVE</small></div></div>
+        <div class="suite-surface suite-surface--archive">
         <div class="page-head">
           <a class="back" data-view="mywork"><i class="fa-solid fa-arrow-left"></i>回我的工作</a>
           <h1>歷史紀錄</h1>
@@ -1400,10 +1426,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             </tbody>
           </table>
         </div>
+              </div>
       </section>
 
       <!-- ---------- POINTS ---------- -->
       <section class="view" data-view-panel="points">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> ACHIEVEMENT GALLERY</div><h2>努力，值得被記得。</h2><p>檢視累積點數，了解每一份獎勵的來源。</p></header>
+        <div class="suite-nameplate"><span>09</span><div>成就展示廳<small>ACHIEVEMENT GALLERY</small></div></div>
+        <div class="suite-surface suite-surface--gallery">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>我的點數</h1>
@@ -1485,10 +1515,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             </table>
           </div>
         </div>
+              </div>
       </section>
 
       <!-- ---------- METRIC ---------- -->
       <section class="view" data-view-panel="metric">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> THE BOARDROOM</div><h2>一起，看向更遠的目標。</h2><p>掌握部門達成率與團隊的前進方向。</p></header>
+        <div class="suite-nameplate"><span>10</span><div>策略會議室<small>THE BOARDROOM</small></div></div>
+        <div class="suite-surface suite-surface--boardroom">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>部門達成率</h1>
@@ -1528,10 +1562,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           </table>
         </div>
         <p class="chart__say" style="margin-top:16px;">資料來源：財務系統月結報表。係數於每月結算後更新，並套用至當月獎金核算。</p>
+              </div>
       </section>
 
       <!-- ---------- NOTIFICATIONS ---------- -->
       <section class="view" data-view-panel="notifications">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> COMMUNICATIONS</div><h2>重要消息，準時抵達。</h2><p>留意工作提醒、驗收結果與最新機會。</p></header>
+        <div class="suite-nameplate"><span>11</span><div>訊息聯絡室<small>COMMUNICATIONS</small></div></div>
+        <div class="suite-surface suite-surface--communications">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>通知中心</h1>
@@ -1570,10 +1608,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             <div class="noti__body"><p>「導入案例整理」已通過驗收，<b>+9 點</b>已入帳。</p><time>3 天前</time></div>
           </div>
         </div>
+              </div>
       </section>
 
       <!-- ---------- SKILLS ---------- -->
       <section class="view" data-view-panel="skills">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> LEARNING ACADEMY</div><h2>讓專長，開啟更多可能。</h2><p>盤點已驗證能力，找出下一步成長方向。</p></header>
+        <div class="suite-nameplate"><span>12</span><div>學習研修室<small>LEARNING ACADEMY</small></div></div>
+        <div class="suite-surface suite-surface--academy">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>我的技能</h1>
@@ -1616,10 +1658,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           </div>
           <button class="cta" data-view="skillapply">申請新技能<i class="fa-solid fa-plus"></i></button>
         </div>
+              </div>
       </section>
 
       <!-- ---------- SKILL APPLY（申請技能驗證） ---------- -->
       <section class="view" data-view-panel="skillapply">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> ASSESSMENT SUITE</div><h2>為你的實力，留下證明。</h2><p>整理作品與經驗，申請專業技能驗證。</p></header>
+        <div class="suite-nameplate"><span>13</span><div>能力評鑑室<small>ASSESSMENT SUITE</small></div></div>
+        <div class="suite-surface suite-surface--assessment">
         <div class="page-head">
           <a class="back" data-view="skills"><i class="fa-solid fa-arrow-left"></i>回我的技能</a>
           <h1>申請技能驗證</h1>
@@ -1678,10 +1724,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           </div>
           <a class="cta" data-view="skills">回我的技能<i class="fa-solid fa-arrow-right"></i></a>
         </div>
+              </div>
       </section>
 
       <!-- ---------- SETTINGS ---------- -->
       <section class="view" data-view-panel="settings">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> PERSONAL CONCIERGE</div><h2>讓工作，配合你的節奏。</h2><p>設定工作時段、負載上限與個人偏好。</p></header>
+        <div class="suite-nameplate"><span>14</span><div>個人管家室<small>PERSONAL CONCIERGE</small></div></div>
+        <div class="suite-surface suite-surface--concierge">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>設定</h1>
@@ -1744,10 +1794,14 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
         </div>
 
         <button class="logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i>登出</button>
+              </div>
       </section>
 
       <!-- ---------- HELP ---------- -->
       <section class="view" data-view-panel="help">
+        <header class="suite-heading"><div class="room-eyebrow">38F <span></span> RESOURCE LIBRARY</div><h2>需要答案時，來這裡。</h2><p>查閱點數規則、工作流程與常見問題。</p></header>
+        <div class="suite-nameplate"><span>15</span><div>知識閱覽室<small>RESOURCE LIBRARY</small></div></div>
+        <div class="suite-surface suite-surface--library">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>說明與規則</h1>
@@ -1831,6 +1885,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             <p>每月結算一次。人資／財務確認並鎖定後，該月的獎金明細就不可再由一般角色修改。</p>
           </details>
         </div>
+              </div>
       </section>
 
     </main>

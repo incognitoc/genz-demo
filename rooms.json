@@ -1,0 +1,130 @@
+{
+  "login": [
+    "00",
+    "抵達大廳",
+    "ARRIVAL LOBBY",
+    "歡迎抵達，新的工作日。",
+    "從這裡進入你的空中辦公室。",
+    "arrival"
+  ],
+  "home": [
+    "01",
+    "空中接待廳",
+    "SKY LOUNGE",
+    "從容，開始今天。",
+    "掌握今天的工作與本月成果。",
+    "lounge"
+  ],
+  "workbench": [
+    "02",
+    "專案辦公室",
+    "PROJECT STUDIO",
+    "專注，讓想法落地。",
+    "推進工作、交付成果，領取你的努力回報。",
+    "studio"
+  ],
+  "browse": [
+    "03",
+    "派工中心",
+    "PROJECT EXCHANGE",
+    "下一個機會，在這裡。",
+    "找到適合你的專長，認領下一份挑戰。",
+    "dispatch"
+  ],
+  "taskdetail": [
+    "04",
+    "專案簡報室",
+    "BRIEFING ROOM",
+    "先看清目標，再開始。",
+    "確認需求、交付格式與驗收標準。",
+    "briefing"
+  ],
+  "deliver": [
+    "05",
+    "成果審閱室",
+    "REVIEW STUDIO",
+    "讓成果，準備好被看見。",
+    "整理交付內容，記錄每一次改進。",
+    "review"
+  ],
+  "submitted": [
+    "06",
+    "休憩交誼廳",
+    "REFLECTION LOUNGE",
+    "告一段落，稍作停留。",
+    "成果已送出，接下來交給審核流程。",
+    "reflection"
+  ],
+  "mywork": [
+    "07",
+    "個人營運室",
+    "OPERATIONS SUITE",
+    "把每一件事，安排妥當。",
+    "集中掌握本薪工作與加值工作的進度。",
+    "operations"
+  ],
+  "history": [
+    "08",
+    "典藏檔案室",
+    "THE ARCHIVE",
+    "每一步，都有跡可循。",
+    "回看已完成的工作與每一筆結算紀錄。",
+    "archive"
+  ],
+  "points": [
+    "09",
+    "成就展示廳",
+    "ACHIEVEMENT GALLERY",
+    "努力，值得被記得。",
+    "檢視累積點數，了解每一份獎勵的來源。",
+    "gallery"
+  ],
+  "metric": [
+    "10",
+    "策略會議室",
+    "THE BOARDROOM",
+    "一起，看向更遠的目標。",
+    "掌握部門達成率與團隊的前進方向。",
+    "boardroom"
+  ],
+  "notifications": [
+    "11",
+    "訊息聯絡室",
+    "COMMUNICATIONS",
+    "重要消息，準時抵達。",
+    "留意工作提醒、驗收結果與最新機會。",
+    "communications"
+  ],
+  "skills": [
+    "12",
+    "學習研修室",
+    "LEARNING ACADEMY",
+    "讓專長，開啟更多可能。",
+    "盤點已驗證能力，找出下一步成長方向。",
+    "academy"
+  ],
+  "skillapply": [
+    "13",
+    "能力評鑑室",
+    "ASSESSMENT SUITE",
+    "為你的實力，留下證明。",
+    "整理作品與經驗，申請專業技能驗證。",
+    "assessment"
+  ],
+  "settings": [
+    "14",
+    "個人管家室",
+    "PERSONAL CONCIERGE",
+    "讓工作，配合你的節奏。",
+    "設定工作時段、負載上限與個人偏好。",
+    "concierge"
+  ],
+  "help": [
+    "15",
+    "知識閱覽室",
+    "RESOURCE LIBRARY",
+    "需要答案時，來這裡。",
+    "查閱點數規則、工作流程與常見問題。",
+    "library"
+  ]
+}
