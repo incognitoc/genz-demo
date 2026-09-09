@@ -800,8 +800,12 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
   .home-grid > div > .section:first-child{margin-top:0;}
 }
 </style>
+<link rel="stylesheet" href="office.css">
 </head>
 <body>
+<div class="office-world" aria-hidden="true"><div class="office-background" id="officeBackground"></div><div class="office-shade"></div></div>
+<div id="roomTravel" class="room-travel" aria-hidden="true"></div>
+<div class="office-location" aria-live="polite"><span class="location-dot"></span><span id="roomLocation">38F / 空中接待廳</span><span class="location-weather">晴時多雲 · CITY VIEW</span></div>
 <div class="app" id="app">
 
   <!-- ===================== LOGIN ===================== -->
@@ -880,6 +884,16 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 
       <!-- ---------- HOME ---------- -->
       <section class="view" data-view-panel="home">
+        <div class="room-intro">
+          <div class="room-eyebrow">38F <span></span> THE SKY LOUNGE</div>
+          <h1 tabindex="-1">從容，開始今天。</h1>
+          <p>怡君，歡迎回來。<br>在城市之上，讓每一份努力都有回響。</p>
+          <div class="room-stats"><a data-view="points"><small>本月有效點數</small><strong>46 <em>點</em></strong></a><a data-view="mywork"><small>等待你處理</small><strong>3 <em>件工作</em></strong></a></div>
+          <button class="room-enter" data-view="workbench"><span><small>ROOM 02 / PROJECT STUDIO</small>走進我的工作台</span><i class="fa-solid fa-arrow-right"></i></button>
+          <a class="room-scroll" href="#homeOverview" onclick="event.preventDefault();document.getElementById('homeOverview').scrollIntoView({behavior:'smooth'})">查看工作總覽 ↓</a>
+        </div>
+        <div class="room-nameplate"><span>01</span><div>空中接待廳<small>SKY LOUNGE</small></div></div>
+        <div id="homeOverview" class="office-overview">
         <div class="greeting">
           <h1>嗨，怡君</h1>
           <p>這個月你已累積 <span class="num">46</span> 點有效點數，還有 <span class="num">3</span> 件工作等你處理。</p>
@@ -1083,6 +1097,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
             </div>
           </div>
         </div>
+      </div>
       </section>
 
       <!-- ---------- BROWSE ---------- -->
@@ -1183,6 +1198,9 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 
       <!-- ---------- WORKBENCH（工作台） ---------- -->
       <section class="view" data-view-panel="workbench">
+        <div class="studio-heading"><div class="room-eyebrow">38F <span></span> THE PROJECT STUDIO</div><h1 tabindex="-1">專注，讓想法落地。</h1><p>你的專屬工作空間。每一項進度，都離完成更近一步。</p></div>
+        <div class="room-nameplate"><span>02</span><div>專案辦公室<small>PROJECT STUDIO</small></div></div>
+        <div class="studio-desk">
         <div class="page-head">
           <a class="back" data-view="home"><i class="fa-solid fa-arrow-left"></i>回首頁</a>
           <h1>工作台</h1>
@@ -1220,6 +1238,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
           工作台目前是空的。<br>去「認領工作」挑選符合你技能的工作。
           <div style="margin-top:16px;"><a class="mini-cta" data-view="browse" style="margin:0;">前往認領工作</a></div>
         </div>
+      </div>
       </section>
 
       <!-- ---------- DELIVER（交件） ---------- -->
@@ -1827,6 +1846,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
   </div>
 </div>
 
+<script src="office.js"></script>
 <script>
 (function(){
   var root=document.documentElement;
@@ -1923,6 +1943,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
 
   function show(id){
     if(!titles[id]) id='home';
+    if(window.officeNavigate) window.officeNavigate(id);
     var inShell=!!shellViews[id];
     panels.forEach(function(p){
       var v=p.dataset.viewPanel;
@@ -2094,7 +2115,7 @@ details.faq p{padding:0 var(--s3) 14px;font-size:var(--fs-14);color:var(--ink-mi
   syncThemeChoice();
 
   var start=location.hash.slice(1);
-  show(start && titles[start] ? start : 'login');
+  show(start && titles[start] ? start : 'home');
 })();
 </script>
 </body>
