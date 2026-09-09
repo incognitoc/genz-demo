@@ -1,0 +1,29 @@
+/* Glass finish: smoked navigation and luminous, readable work surfaces. */
+:root,:root[data-theme=light],:root[data-theme=dark]{--shell:#202826;--shell-line:#ffffff26;--bg:#edf3f1;--surface:rgba(255,255,255,.58);--surface-2:rgba(240,246,243,.68);--ink:#172b25;--ink-mid:#3c5148;--ink-mute:#586d62;--line:rgba(89,114,101,.22);--line-strong:rgba(69,100,84,.4);--brand:#456449;--brand-press:#304d34;--brand-tint:rgba(218,234,214,.75);--on-brand:#fff;--ok:#216a43;--ok-tint:#e2f0e3;--alert:#a13c2d;--alert-tint:#f8e6df;--wait:#395d70;--wait-tint:#e5eef2;--room-paper:rgba(249,255,252,.66);--room-edge:rgba(255,255,255,.74);--room-shadow:inset 0 1px 0 #ffffffcc,inset 0 -1px 0 #ffffff55,0 20px 65px #0a231f30;--room-ink:#20392d;--glass-blur:blur(28px) saturate(125%)}
+:root[data-theme=dark]{--room-paper:rgba(218,232,227,.72);--surface:rgba(242,251,247,.56);--surface-2:rgba(215,232,223,.64)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--room-paper:rgba(218,232,227,.72);--surface:rgba(242,251,247,.56);--surface-2:rgba(215,232,223,.64)}}
+/* Navigation has its own palette, independent of the light glass workspace. */
+html .sidebar,html .appbar,html .tabbar,html[data-theme=dark] .sidebar,html[data-theme=dark] .appbar,html[data-theme=dark] .tabbar{
+ --surface:rgba(255,255,255,.11);--surface-2:rgba(255,255,255,.09);--ink:#f5f7f5;--ink-mid:#d5ded9;--ink-mute:#abbab1;--line:rgba(255,255,255,.16);--brand:#e4d2a4;
+ background:rgba(14,20,19,.7);color:#eef3ef;-webkit-backdrop-filter:blur(30px) saturate(75%);backdrop-filter:blur(30px) saturate(75%);border-color:rgba(255,255,255,.14);box-shadow:inset 1px 0 0 #ffffff08,0 10px 35px #05140f20;
+}
+html .sidebar{border-right:1px solid #ffffff26}html .appbar{border-bottom:1px solid #ffffff21}html .tabbar{border-top:1px solid #ffffff26}
+html .nav__item{color:#d1dbd5}html .nav__item:hover{background:#ffffff12;color:#fff}html .nav__item.is-active{background:linear-gradient(135deg,#ffffff29,#ffffff12);color:#fff;border:1px solid #ffffff30;box-shadow:inset 0 1px 0 #ffffff24,0 4px 16px #0000001a}html .nav__label{color:#a5b3ab}.sidebar__brand>i{color:#ddcda7}.sidebar .brand__name,.appbar .brand__name{color:#f2f5f2}.sidebar .brand__sub,.appbar .brand__sub{color:#aebab1}.appbar .iconbtn{color:#e7eee7}.appbar__user-name{color:#dce5de}html .tab.is-active{color:#f0dfb5}html .tab{color:#b7c5bc}
+html .office-location,html[data-theme=dark] .office-location{color:#e4ece5}.location-dot{background:#c1d6bb;box-shadow:0 0 8px #bdd4b655}.location-weather{color:#a9b9ae}
+html .room-directory-trigger button{background:rgba(255,255,255,.08);color:#edf4ec;border:1px solid #ffffff30;box-shadow:inset 0 1px 0 #ffffff12;backdrop-filter:blur(16px)}html .room-directory-trigger button:hover{background:#ffffff19}
+/* Bright glass continues through every room and all nested content blocks. */
+html .office-overview,html .studio-desk,html .suite-surface,html .login__card,html[data-theme=dark] .office-overview,html[data-theme=dark] .studio-desk,html .room-directory{
+ background:var(--room-paper);border:1px solid var(--room-edge);box-shadow:var(--room-shadow);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);color:var(--ink);
+}
+html .card,html .task,html .wb__item,html .work__item,html .suite-surface .tablewrap,html .suite-surface .rule,html .suite-surface .noti,html .directory-room,html .suite-surface .stat-row .stat,html .suite-surface .metagrid,html .submitted__steps{
+ background:rgba(255,255,255,.43);border-color:rgba(255,255,255,.76);box-shadow:inset 0 1px 0 #ffffffa3,0 5px 20px #29443608;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--ink);
+}
+html .suite-surface .stat:first-child dt{color:var(--ink-mid)}html .suite-surface--gallery .stat-row .stat:first-child{background:rgba(245,255,238,.63);border-color:#ffffffbc;color:var(--ink)}html .suite-surface--gallery .stat-row .stat{border-bottom:3px solid #b8b99c}
+html .suite-surface--boardroom .chart{background:rgba(255,255,255,.5);border-color:#ffffffba;--ink-mute:#526b5c;--line:#9eafa4;--brand:#4e7453;--surface:#edf5ec}html .suite-surface--boardroom .chart__legend{color:#3a5445}
+html .suite-surface--communications .notis{background:none;border:0;box-shadow:none;backdrop-filter:none}html .suite-surface--communications .noti{background:#ffffff78}
+html .suite-surface--archive tbody tr:nth-child(even){background:rgba(232,241,234,.5)}html .suite-surface th{background:rgba(228,239,231,.6)}html .suite-surface--review .dropzone,html .dropzone{background:rgba(255,255,255,.38);border-color:#839b89}
+html .suite-surface input,html .suite-surface textarea,html .suite-surface select,html .login__card input{background:rgba(255,255,255,.58);box-shadow:inset 0 1px 4px #25433208;color:var(--ink)}html .directory-room:hover,html .directory-room.is-active{background:rgba(225,241,219,.77);border-color:#839d76}
+html .room-enter{background:rgba(250,255,246,.76);backdrop-filter:blur(22px);border-color:#ffffffe0;box-shadow:inset 0 1px 0 #fff,0 10px 30px #112a1b26}html .room-enter:hover{background:rgba(255,255,250,.9)}
+html .suite-nameplate,html .room-nameplate{background:rgba(19,28,24,.52);backdrop-filter:blur(24px);border-color:#ffffff47;box-shadow:inset 0 1px 0 #ffffff21}
+.room-directory::backdrop{background:#09140f77;backdrop-filter:blur(12px)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){html .suite-surface,html .office-overview,html .studio-desk,html .login__card,html .room-directory{background:rgba(244,250,246,.94)}html .sidebar,html .appbar,html .tabbar{background:rgba(16,23,19,.94)}}
